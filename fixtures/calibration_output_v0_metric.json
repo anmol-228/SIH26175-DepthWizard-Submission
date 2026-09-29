@@ -1,0 +1,149 @@
+{
+  "_fixture_meta": {
+    "boundary": "CALIBRATION -> PIPELINE/VIEWER (handbook Part X), METRIC branch",
+    "version_status": "v0 / EXPERIMENTAL -- NOT frozen",
+    "contract_document": "10_DOCUMENTATION/CALIBRATION_OUTPUT_INTERFACE.md",
+    "verified_against_code_on": "2026-08-28",
+    "verified_by": "Nirmalya (issue #5 / DW-S1-02)",
+    "verification": "scripts/10_verify_calibration_output.py reopens every declared raster and asserts pixel size, origin, shape, EPSG GeoKey, nodata tag, dtype, real-georeference flag and valid-pixel count, then feeds the array into the real heightfield_to_mesh() consumer.",
+    "files_read_to_verify": [
+      "src/geoio.py",
+      "scripts/07_calibrate_and_eval.py",
+      "PHASE2_RED_FLAGS/scripts/K1_tiling_stitch.py",
+      "PHASE2_RED_FLAGS/scripts/K2_georeferencing_export.py",
+      "PHASE2_RED_FLAGS/scripts/K3_mesh_pipeline.py",
+      "outputs/metrics/finetuned_calibration_report_iter2_partial_unfreeze.json",
+      "PHASE2_RED_FLAGS/outputs/metrics/K2_georeferencing_check.json"
+    ],
+    "why_not_v1": "Rolled back from a premature v1. The export mechanism is implemented and round-trip tested, but at the time of the first freeze it had only been exercised on synthetic arrays and on the ground-truth Vaihingen raster -- NOT on real model predictions -- and no downstream consumer had reviewed the field set. HANDOFF_INTERFACE_POLICY's v1 bar is 'downstream teammates are allowed to build against it', which needs real validation plus consumer review, neither of which had happened. Flagged by Anmol in the Day-1 review and accepted: freezing on mechanism alone was the wrong call.",
+    "what_v1_requires": [
+      "scripts/07_calibrate_and_eval.py run end to end on real checkpoints, writing real rasters",
+      "scripts/10_verify_calibration_output.py passing against those real rasters",
+      "the re-run metrics matching the frozen baseline field by field (no perturbation)",
+      "Anmol's review of calibration semantics, and Ashmita/Aishee confirming the field set"
+    ]
+  },
+  "schema_version": "calibration_output/v0-metric",
+  "product": "metric_dsm",
+  "producer": {
+    "functions": [
+      "geoio.save_geotiff(...)",
+      "geoio.save_dsm_geotiff(...)"
+    ],
+    "scripts": [
+      "scripts/07_calibrate_and_eval.py",
+      "PHASE2_RED_FLAGS/scripts/K1_tiling_stitch.py"
+    ],
+    "owner": "Nirmalya"
+  },
+  "consumer": {
+    "primary": "heightfield_to_mesh(elev, rgb, gsd, ...) in PHASE2_RED_FLAGS/scripts/K3_mesh_pipeline.py",
+    "secondary": "geoio.load_geotiff() for evaluation/inspection",
+    "owners": [
+      "Ashmita",
+      "Aishee",
+      "Debopriya"
+    ]
+  },
+  "file": {
+    "paths": [
+      "outputs/predictions/calibrated_dsm_area{N}_{calibration}.tif",
+      "PHASE2_RED_FLAGS/outputs/predictions/K1_calibrated_dsm_area{N}.tif"
+    ],
+    "gitignored": true,
+    "note": "Rasters are regenerable bulk and stay out of Git; the manifest beside them is committed.",
+    "manifests": [
+      "outputs/metrics/{EVAL_OUT_NAME stem}_dsm_export_manifest.json",
+      "PHASE2_RED_FLAGS/outputs/metrics/K1_tiling_stitch.json -> calibrated_dsm_export"
+    ]
+  },
+  "format": {
+    "container": "GeoTIFF, single band",
+    "writer": "tifffile.imwrite with hand-constructed extratags (not GDAL/rasterio)",
+    "dtype": "float32",
+    "embedded_tags": {
+      "33550 ModelPixelScaleTag": "(pixel_size_x, abs(pixel_size_y), 0.0)",
+      "33922 ModelTiepointTag": "(0,0,0, origin_x, origin_y, 0)",
+      "34735 GeoKeyDirectoryTag": "GTModelType=1 projected, GTRasterType=1 PixelIsArea, ProjectedCSType=32767 (USER-DEFINED), ProjLinearUnits=9001 metre",
+      "42113 GDAL_NODATA": "ASCII, '-9999.0'. Added under DW-S1-02; K2's writer set no nodata tag, so the convention was reader-side only before this."
+    }
+  },
+  "fields": {
+    "array": {
+      "shape": "(H, W)",
+      "dtype": "float32",
+      "units": "metres",
+      "meaning": "metric = a * relative_model_output + b"
+    },
+    "nodata": {
+      "value": -9999.0,
+      "constant": "geoio.DSM_NODATA",
+      "source": "DepthWizard__Build_Guide.pdf section 10; matches geoio.dsm_nodata_mask default"
+    },
+    "epsg": {
+      "value": 32767,
+      "meaning": "GeoTIFF user-defined CRS. No authority code is asserted.",
+      "WARNING": "The pixel grid and geotransform are real and round-trip exactly; the ABSOLUTE CRS is not asserted. Earlier exports stamped EPSG:32633, taken from the dataset's own dsm.vrt (PROJCS['WGS 84 / UTM zone 33N'], per PHASE2_RED_FLAGS/02_DATASET_RESEARCH.md). That code is wrong: easting 496794.825 implies longitude ~8.96E under UTM 32N, which is Vaihingen, whereas under 33N the same easting implies ~14.96E, about 600 km east. Rather than substitute 32632 or 25832 - our arithmetic against the source's own declaration, still unverified - we assert no authority code at all. A consumer needing a real CRS must establish it independently."
+    },
+    "pixel_size": {
+      "units": "metres/pixel",
+      "convention": "world-file: y is negative (north-up)",
+      "vaihingen_value": [
+        0.09,
+        -0.09
+      ]
+    },
+    "origin": {
+      "meaning": "upper-left corner in projected coordinates",
+      "vaihingen_area26_value": [
+        496794.825,
+        5419752.255
+      ]
+    },
+    "calibration": {
+      "values": [
+        "per_tile_full_oracle",
+        "sparse_10",
+        "per_scene_oracle_scale_shift"
+      ],
+      "WARNING": "per_tile_full_oracle and per_scene_oracle_scale_shift are calibrated against the tile's own dense ground truth: a NON-DEPLOYABLE upper bound. sparse_10 is deployment-like but still samples the test tile. Neither is a blind generalization figure. Do not strip the manifest's IMPORTANT field when quoting any number derived from these."
+    },
+    "extent": {
+      "values": [
+        "full_tile (K1)",
+        "patch_covered_subregion_anchored_at_tile_origin (07)"
+      ],
+      "note": "04_make_patches.py drops patches failing its validity mask, so 07's rasters can be sparse inside their bounding extent; uncovered pixels are nodata."
+    }
+  },
+  "error_behavior": {
+    "non_2d_array": "save_geotiff raises ValueError",
+    "epsg_required": "no default; a georeferenced product is never written by falling through a default",
+    "guessed_georeference": "save_dsm_geotiff(require_georeferenced=True) raises when the source transform came from load_geotiff's Vaihingen nominal fallback rather than real data",
+    "missing_tfw": "both producers SKIP the export and record the reason in their manifest rather than writing a guessed georeference",
+    "strict_load": "load_geotiff(path, strict=True) raises instead of guessing"
+  },
+  "consumer_must_know": [
+    "Elevation is absolute in the GeoTIFF but REBASED in the mesh: heightfield_to_mesh computes Z = (elev - elev.min()) * z_exaggeration, so the .glb loses the datum. Add elev.min() back from the GeoTIFF if true height is needed. See pipeline_to_3d_v1.json z_computation.",
+    "Mask nodata BEFORE meshing - -9999 pixels drag the mesh floor down through that same elev.min() rebase. scripts/10_verify_calibration_output.py shows the pattern.",
+    "Read gsd from GeoRaster.gsd. K3_mesh_pipeline.py currently hardcodes gsd=0.09."
+  ],
+  "real_verified_round_trip_result": {
+    "source_file": "PHASE2_RED_FLAGS/outputs/metrics/K2_georeferencing_check.json",
+    "note": "Geometry contract identical to K2's verified run; save_geotiff reuses K2's exact tag construction. Re-verified for calibrated predictions by scripts/10_verify_calibration_output.py, whose report lands at outputs/metrics/calibration_output_consumer_check.json.",
+    "area": 26,
+    "source_pixel_size_m": [
+      0.09,
+      -0.09
+    ],
+    "source_origin": [
+      496794.825,
+      5419752.255
+    ],
+    "source_shape_px": [
+      1783,
+      2995
+    ],
+    "checks_all_pass": true
+  }
+}

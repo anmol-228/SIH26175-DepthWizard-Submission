@@ -1,0 +1,1902 @@
+{
+  "schema": "dw-s1-11-hilly-risk-signal/v2",
+  "generated_utc": "2026-09-05T06:52:53.322543+00:00",
+  "git": {
+    "branch": "experiment/dw-s1-11-hilly-risk-methodology",
+    "head": "dd7d516c81df11beac1b4a9625165e178defc2e9",
+    "tree_state": "dirty",
+    "tracked_modifications": [],
+    "untracked_expected_evidence_files": [
+      "(internal note, not included)",
+      "PHASE2_RED_FLAGS/outputs/metrics/E_hilly_risk_signal_experiment.json",
+      "PHASE2_RED_FLAGS/scripts/E_05_hilly_risk_signal_experiment.py"
+    ],
+    "untracked_other_preexisting": [
+      "data/staging/day3_area26_metric_20260904/oracle_reference_area26_25pts.txt",
+      "data/staging/day3_area26_metric_20260904/top_mosaic_09cm_area26.tfw",
+      "data/staging/day3_area26_metric_20260904/top_mosaic_09cm_area26.tif"
+    ]
+  },
+  "experiment_script": {
+    "path": "PHASE2_RED_FLAGS\\scripts\\E_05_hilly_risk_signal_experiment.py",
+    "sha256": "a55f4267c1331913c8202f7e5a9dd0fdc1d324919404c75e36dfa36e9010d60b",
+    "sha256_NOTE": "hash of the exact script bytes that produced this JSON"
+  },
+  "checkpoint": {
+    "path": "checkpoints\\da2_small_finetuned_iter2_partial_unfreeze.pt",
+    "size_bytes": 99266768,
+    "sha256": "74ccde40cf703095ed2adb783394d0dd2692b3ffaaf3b8a9e534e27feeba78d8"
+  },
+  "device": "cuda",
+  "tiling_defaults": {
+    "window": 512,
+    "stride": 384
+  },
+  "sparse_fit": {
+    "n_points": 10,
+    "seeds": 5,
+    "estimator": "RANSACRegressor(LinearRegression(), min_samples=max(2,n//2)) -- mirrors run_pipeline.py's fit_scale_shift_ransac (PR #34, merged into main), reimplemented not imported",
+    "sparse_reference_provenance": "The scale/shift PROCEDURE is deployable GIVEN GENUINE EXTERNAL REFERENCE ELEVATIONS -- it is exactly run_pipeline.py's --reference contract. The sparse reference elevations used IN THIS EXPERIMENT are simulated controls sampled from each scene's evaluation DSM (y = gt[rr, cc]), not independent field truth, not real GCP measurements, and not independently surveyed reference elevations. 'Deployable' describes the algorithm conditionally, never the provenance of these particular sampled values.",
+    "b2_denominator_guard": "EPS_DIVISION_GUARD=1e-06 m is a floating-point division safety guard only, not a methodological minimum-range cutoff. A seed whose 10 sampled points span less than this many metres (or a non-finite range) is marked candidate_diagnostic_evaluable=false / insufficient_evidence and excluded from pass/fail comparison."
+  },
+  "input_identities": {
+    "mount_adams": {
+      "rgb": {
+        "path": "PHASE2_RED_FLAGS\\data\\hilly_terrain\\aoi\\rgb_1m.npy",
+        "size_bytes": 26400128,
+        "sha256": "5448a542c342c1a6997133d0b98209caeb702d72f1e2e2f306d54ebceca89399"
+      },
+      "elevation": {
+        "path": "PHASE2_RED_FLAGS\\data\\hilly_terrain\\aoi\\dem_1m.npy",
+        "size_bytes": 35200128,
+        "sha256": "25049aa7e7376d1f8d2bd143a85faf35e5906179a01df17d50769acbcab86a58"
+      },
+      "acquisition_provenance": "PARTIALLY VERIFIED (see DW_S1_11_HILLY_RISK_METHODOLOGY.md section 4). The sha256 above identifies the LOCAL FILE actually read by this run, not the original raw-fetch chain -- the committed E_00_fetch_data.py / fetch_manifest.json record a different, discarded tile pair (WA_FEMAHQ_2018), and no committed script/hash documents the acquisition of the Mount Adams tile this experiment (and E_01-E_03) actually use. A present-day hash establishes reproducibility of THIS run, not the historical acquisition gap."
+    },
+    "vaihingen_area38": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area38.tif",
+        "size_bytes": 29404734,
+        "sha256": "f52714e5d5991a194ecd784359ded79459c00a07e89b5f6ceb9975dd039dfeb0"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area38.tif",
+        "size_bytes": 38941348,
+        "sha256": "581ae6cedc15997898c0a77764568f89679aad9af7cdd401b350f1d656978932"
+      },
+      "acquisition_provenance": "VERIFIED -- ISPRS Vaihingen benchmark, committed raw tile"
+    },
+    "vaihingen_area6": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area6.tif",
+        "size_bytes": 14573364,
+        "sha256": "b4afd0906c979c25a162e84247f93ffe7ce62900ce9f3ac9a1234c7d3993476c"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area6.tif",
+        "size_bytes": 19321604,
+        "sha256": "7f1cb26fce4c8acd9a0fd156c58f97421b2df9b354ed45d4770bc9e95f084114"
+      },
+      "acquisition_provenance": "VERIFIED -- ISPRS Vaihingen benchmark, committed raw tile"
+    },
+    "vaihingen_area34": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area34.tif",
+        "size_bytes": 10721306,
+        "sha256": "ecc4d371c93ac279c0e5b98d91ecad13a46bd4d78cee492d1b94fb40d759d352"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area34.tif",
+        "size_bytes": 14203476,
+        "sha256": "88ab7fe0c76dac216dab5495def12c4e0c413ba8242312e2a42511d975ea6918"
+      },
+      "acquisition_provenance": "VERIFIED -- ISPRS Vaihingen benchmark, committed raw tile"
+    },
+    "vaihingen_area8": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area8.tif",
+        "size_bytes": 14577072,
+        "sha256": "8ca3f6aa284ea032ca17a27e772d8a20cc1aee4a33559bc2cc05edc0c7ff8a4d"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area8.tif",
+        "size_bytes": 19318448,
+        "sha256": "9b5e575aaeb4a72387c6cdd54682a4db7d9a6618218558d5f2cef4587f5e96c3"
+      },
+      "acquisition_provenance": "VERIFIED -- ISPRS Vaihingen benchmark, committed raw tile"
+    }
+  },
+  "supersedes": "exploratory cross-area Vaihingen draw (seed=7, 28 patches mixed across 9 ISPRS areas) run outside version control in the prior session -- EXPLORATORY / SUPERSEDED, not scene-consistent with Mount Adams's single contiguous AOI; SUPERSEDES the previous reviewed/uncommitted revision of this script, which normalized signal B2 by the full-scene dense ground-truth range instead of the sampled reference points' own range (see module docstring, 'CORRECTION PASS')",
+  "scenes": {
+    "mount_adams": {
+      "scene": "mount_adams",
+      "shape_hw": [
+        4000,
+        2200
+      ],
+      "elevation_range_m_full_scene": 370.3599853515625,
+      "elevation_range_m_full_scene_NOTE": "diagnostic context only -- NOT the B2 normalization denominator; see signal_B_sparse10_ransac_on_blended[*].sampled_reference_range_m for the corrected, runtime-computable denominator",
+      "sliding_window_plan": {
+        "height": 4000,
+        "width": 2200,
+        "window": 512,
+        "stride": 384,
+        "n_windows": 66
+      },
+      "n_grid_windows_nonoverlap": 28,
+      "signal_A_raw_tile_relief_heterogeneity": {
+        "representation": "RAW_TILE (predict_depth output, pre-blend, sliding window plan)",
+        "n": 66,
+        "min": 1.8059163093566895,
+        "max": 5.080348491668701,
+        "mean": 3.3325231581023247,
+        "std": 0.7480620815234693,
+        "ratio_max_min": 2.8131693951412635,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.22447318324096704
+      },
+      "signal_A_blended_grid_relief_heterogeneity": {
+        "representation": "BLENDED (blend_tiles output, non-overlapping grid)",
+        "n": 28,
+        "min": 1.4499530792236328,
+        "max": 3.1509439945220947,
+        "mean": 1.9516796001366206,
+        "std": 0.30939163105642786,
+        "ratio_max_min": 2.173135144627746,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.1585258313069266
+      },
+      "signal_A_normalized_grid_relief_heterogeneity": {
+        "representation": "NORMALIZED (relative_dsm.normalize_relative output, non-overlapping grid)",
+        "normalize_relative_meta": {
+          "method": "percentile_clip",
+          "low_pct": 2.0,
+          "high_pct": 98.0,
+          "low_value": 2.028745412826538,
+          "high_value": 4.027804851531982,
+          "degenerate": false,
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "invertible_as": "raw = value*(hi-lo)+lo, /depth_sign"
+        },
+        "n": 28,
+        "min": 0.725317656993866,
+        "max": 1.0,
+        "mean": 0.880115664431027,
+        "std": 0.0764623628649148,
+        "ratio_max_min": 1.3787062680158315,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.08687762978783684
+      },
+      "diagnostic_only_gt_grid_relief_heterogeneity": {
+        "representation": "GROUND TRUTH -- diagnostic context only, NEVER a runtime input",
+        "n": 28,
+        "min": 18.7900390625,
+        "max": 289.760009765625,
+        "mean": 67.36785452706474,
+        "std": 58.14429985244293,
+        "ratio_max_min": 15.420937061483292,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.8630867089448977
+      },
+      "signal_B_sparse10_ransac_on_blended": [
+        {
+          "seed": 0,
+          "method": "ransac",
+          "a": -24.211651374602493,
+          "b": 1023.4727266354089,
+          "n_points": 10,
+          "inliers": 7,
+          "inlier_ratio": 0.7,
+          "sampled_reference_points": {
+            "row": [
+              941,
+              2300,
+              810,
+              2625,
+              711,
+              108,
+              1879,
+              2026,
+              1810,
+              2588
+            ],
+            "col": [
+              1194,
+              591,
+              1027,
+              2115,
+              1982,
+              902,
+              375,
+              1177,
+              2179,
+              136
+            ],
+            "elevation_m": [
+              958.6799926757812,
+              1045.43994140625,
+              955.3800048828125,
+              912.1699829101562,
+              934.4199829101562,
+              957.72998046875,
+              1047.1500244140625,
+              978.5900268554688,
+              925.6099853515625,
+              1102.9200439453125
+            ]
+          },
+          "sampled_reference_range_m": 190.75006103515625,
+          "resid_abs_mean_m": 44.17959111412741,
+          "resid_abs_max_m": 144.56058445954727,
+          "normalized_residual_mean_B2": 0.23160983998838605,
+          "normalized_residual_max_B2": 0.7578534112914594,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": false,
+          "existing_fit_rejection_reason": "non-positive scale"
+        },
+        {
+          "seed": 1,
+          "method": "ransac",
+          "a": -2.74952289717985,
+          "b": 945.7323897480436,
+          "n_points": 10,
+          "inliers": 6,
+          "inlier_ratio": 0.6,
+          "sampled_reference_points": {
+            "row": [
+              81,
+              1694,
+              890,
+              814,
+              1920,
+              1900,
+              89,
+              3848,
+              1311,
+              1727
+            ],
+            "col": [
+              72,
+              742,
+              1509,
+              2196,
+              262,
+              1722,
+              956,
+              484,
+              1682,
+              1317
+            ],
+            "elevation_m": [
+              936.0900268554688,
+              1008.3400268554688,
+              935.739990234375,
+              931.469970703125,
+              1060.260009765625,
+              934.47998046875,
+              959.3900146484375,
+              984.1199951171875,
+              929.6099853515625,
+              955.530029296875
+            ]
+          },
+          "sampled_reference_range_m": 130.6500244140625,
+          "resid_abs_mean_m": 29.652656203572224,
+          "resid_abs_max_m": 122.22156806293663,
+          "normalized_residual_mean_B2": 0.2269625002869924,
+          "normalized_residual_max_B2": 0.9354882910361042,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": false,
+          "existing_fit_rejection_reason": "non-positive scale"
+        },
+        {
+          "seed": 2,
+          "method": "ransac",
+          "a": -17.172106777486242,
+          "b": 996.8943441992094,
+          "n_points": 10,
+          "inliers": 6,
+          "inlier_ratio": 0.6,
+          "sampled_reference_points": {
+            "row": [
+              3380,
+              3555,
+              575,
+              3842,
+              3696,
+              2632,
+              1274,
+              605,
+              2430,
+              2770
+            ],
+            "col": [
+              242,
+              334,
+              524,
+              715,
+              1123,
+              377,
+              1977,
+              1972,
+              1299,
+              780
+            ],
+            "elevation_m": [
+              1195.22998046875,
+              1075.4200439453125,
+              955.1699829101562,
+              962.8599853515625,
+              957.280029296875,
+              1070.1800537109375,
+              928.8699951171875,
+              936.4299926757812,
+              939.1300048828125,
+              1017.530029296875
+            ]
+          },
+          "sampled_reference_range_m": 266.3599853515625,
+          "resid_abs_mean_m": 66.83641043656566,
+          "resid_abs_max_m": 251.82540616420647,
+          "normalized_residual_mean_B2": 0.2509251168051755,
+          "normalized_residual_max_B2": 0.9454325725083211,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": false,
+          "existing_fit_rejection_reason": "non-positive scale"
+        },
+        {
+          "seed": 3,
+          "method": "ransac",
+          "a": 275.76544836540546,
+          "b": 223.97286675560792,
+          "n_points": 10,
+          "inliers": 6,
+          "inlier_ratio": 0.6,
+          "sampled_reference_points": {
+            "row": [
+              3186,
+              1178,
+              3789,
+              3524,
+              2279,
+              2605,
+              2244,
+              3993,
+              1085,
+              3928
+            ],
+            "col": [
+              1906,
+              312,
+              967,
+              448,
+              1928,
+              524,
+              1272,
+              584,
+              573,
+              1563
+            ],
+            "elevation_m": [
+              924.6799926757812,
+              993.72998046875,
+              962.4600219726562,
+              1041.3900146484375,
+              915.77001953125,
+              1050.280029296875,
+              954.0999755859375,
+              975.1099853515625,
+              977.030029296875,
+              941.8800048828125
+            ]
+          },
+          "sampled_reference_range_m": 134.510009765625,
+          "resid_abs_mean_m": 66.30959656573057,
+          "resid_abs_max_m": 239.14938426263848,
+          "normalized_residual_mean_B2": 0.4929714649584128,
+          "normalized_residual_max_B2": 1.77793001932972,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 4,
+          "method": "ransac",
+          "a": 59.66669651747804,
+          "b": 833.6673108682414,
+          "n_points": 10,
+          "inliers": 7,
+          "inlier_ratio": 0.7,
+          "sampled_reference_points": {
+            "row": [
+              2841,
+              2560,
+              1977,
+              1163,
+              3041,
+              3665,
+              3849,
+              2651,
+              2770,
+              2196
+            ],
+            "col": [
+              6,
+              116,
+              300,
+              1276,
+              1797,
+              1205,
+              202,
+              408,
+              66,
+              1005
+            ],
+            "elevation_m": [
+              1131.3499755859375,
+              1101.4100341796875,
+              1060.9300537109375,
+              952.8200073242188,
+              938.22998046875,
+              955.489990234375,
+              1023.5100708007812,
+              1065.8399658203125,
+              1110.3199462890625,
+              987.75
+            ]
+          },
+          "sampled_reference_range_m": 193.1199951171875,
+          "resid_abs_mean_m": 62.725874207060556,
+          "resid_abs_max_m": 152.6074619134065,
+          "normalized_residual_mean_B2": 0.3248025879919775,
+          "normalized_residual_max_B2": 0.790220928810621,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        }
+      ],
+      "group": "known_failure"
+    },
+    "vaihingen_area38": {
+      "scene": "vaihingen_area38",
+      "shape_hw": [
+        2550,
+        3816
+      ],
+      "elevation_range_m_full_scene": 36.47715759277344,
+      "elevation_range_m_full_scene_NOTE": "diagnostic context only -- NOT the B2 normalization denominator; see signal_B_sparse10_ransac_on_blended[*].sampled_reference_range_m for the corrected, runtime-computable denominator",
+      "sliding_window_plan": {
+        "height": 2550,
+        "width": 3816,
+        "window": 512,
+        "stride": 384,
+        "n_windows": 70
+      },
+      "n_grid_windows_nonoverlap": 28,
+      "signal_A_raw_tile_relief_heterogeneity": {
+        "representation": "RAW_TILE (predict_depth output, pre-blend, sliding window plan)",
+        "n": 70,
+        "min": 2.2908341884613037,
+        "max": 6.434099197387695,
+        "mean": 3.814112366948809,
+        "std": 0.7753147322784084,
+        "ratio_max_min": 2.8086271934457727,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.20327527290409647
+      },
+      "signal_A_blended_grid_relief_heterogeneity": {
+        "representation": "BLENDED (blend_tiles output, non-overlapping grid)",
+        "n": 28,
+        "min": 2.3180058002471924,
+        "max": 4.743655204772949,
+        "mean": 3.773775373186384,
+        "std": 0.7127232674500263,
+        "ratio_max_min": 2.0464380219700424,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.18886213326688786
+      },
+      "signal_A_normalized_grid_relief_heterogeneity": {
+        "representation": "NORMALIZED (relative_dsm.normalize_relative output, non-overlapping grid)",
+        "normalize_relative_meta": {
+          "method": "percentile_clip",
+          "low_pct": 2.0,
+          "high_pct": 98.0,
+          "low_value": 0.44383424520492554,
+          "high_value": 3.981956720352173,
+          "degenerate": false,
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "invertible_as": "raw = value*(hi-lo)+lo, /depth_sign"
+        },
+        "n": 28,
+        "min": 0.6539796590805054,
+        "max": 1.0,
+        "mean": 0.9302457911627633,
+        "std": 0.1133015685046896,
+        "ratio_max_min": 1.5290995463161634,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.12179745351286997
+      },
+      "diagnostic_only_gt_grid_relief_heterogeneity": {
+        "representation": "GROUND TRUTH -- diagnostic context only, NEVER a runtime input",
+        "n": 28,
+        "min": 6.3287353515625,
+        "max": 25.869781494140625,
+        "mean": 15.241891043526786,
+        "std": 4.831939940416819,
+        "ratio_max_min": 4.087669977818497,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.31701708971794146
+      },
+      "signal_B_sparse10_ransac_on_blended": [
+        {
+          "seed": 0,
+          "method": "ransac",
+          "a": 3.4393100026765033,
+          "b": 263.2753879207824,
+          "n_points": 10,
+          "inliers": 10,
+          "inlier_ratio": 1.0,
+          "sampled_reference_points": {
+            "row": [
+              600,
+              1466,
+              516,
+              1673,
+              453,
+              68,
+              1198,
+              1291,
+              1154,
+              1650
+            ],
+            "col": [
+              2071,
+              1026,
+              1781,
+              3668,
+              3438,
+              1564,
+              651,
+              2042,
+              3780,
+              236
+            ],
+            "elevation_m": [
+              266.7263488769531,
+              274.3487243652344,
+              264.781005859375,
+              265.240478515625,
+              267.4713439941406,
+              263.91033935546875,
+              277.7895202636719,
+              270.4690246582031,
+              274.85699462890625,
+              272.56402587890625
+            ]
+          },
+          "sampled_reference_range_m": 13.879180908203125,
+          "resid_abs_mean_m": 1.5610817226381015,
+          "resid_abs_max_m": 3.5113201599748436,
+          "normalized_residual_mean_B2": 0.11247650224916679,
+          "normalized_residual_max_B2": 0.25299188642317644,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 1,
+          "method": "ransac",
+          "a": 4.033775017078022,
+          "b": 261.8838544012276,
+          "n_points": 10,
+          "inliers": 9,
+          "inlier_ratio": 0.9,
+          "sampled_reference_points": {
+            "row": [
+              51,
+              1080,
+              567,
+              519,
+              1224,
+              1211,
+              56,
+              2453,
+              836,
+              1101
+            ],
+            "col": [
+              125,
+              1287,
+              2618,
+              3810,
+              455,
+              2987,
+              1659,
+              839,
+              2917,
+              2285
+            ],
+            "elevation_m": [
+              278.3677062988281,
+              271.9258728027344,
+              269.03961181640625,
+              263.1419677734375,
+              272.96612548828125,
+              266.021240234375,
+              263.9227294921875,
+              270.6294860839844,
+              265.466796875,
+              269.9589538574219
+            ]
+          },
+          "sampled_reference_range_m": 15.225738525390625,
+          "resid_abs_mean_m": 1.666632064337739,
+          "resid_abs_max_m": 7.202203893826038,
+          "normalized_residual_mean_B2": 0.1094614925613259,
+          "normalized_residual_max_B2": 0.47302821349621604,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 2,
+          "method": "ransac",
+          "a": 5.1979872349707525,
+          "b": 261.7113813810569,
+          "n_points": 10,
+          "inliers": 6,
+          "inlier_ratio": 0.6,
+          "sampled_reference_points": {
+            "row": [
+              2155,
+              2266,
+              366,
+              2449,
+              2356,
+              1678,
+              812,
+              385,
+              1549,
+              1765
+            ],
+            "col": [
+              421,
+              580,
+              909,
+              1241,
+              1948,
+              654,
+              3430,
+              3420,
+              2253,
+              1354
+            ],
+            "elevation_m": [
+              275.2671813964844,
+              271.3026428222656,
+              279.2441711425781,
+              269.6232604980469,
+              268.2372131347656,
+              269.8075256347656,
+              267.2288513183594,
+              267.58538818359375,
+              273.2791442871094,
+              269.0824279785156
+            ]
+          },
+          "sampled_reference_range_m": 12.01531982421875,
+          "resid_abs_mean_m": 2.486796205567521,
+          "resid_abs_max_m": 5.795330255230567,
+          "normalized_residual_mean_B2": 0.20696879000715365,
+          "normalized_residual_max_B2": 0.48232842238199736,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 3,
+          "method": "ransac",
+          "a": 7.055492842190648,
+          "b": 261.0631738891429,
+          "n_points": 10,
+          "inliers": 8,
+          "inlier_ratio": 0.8,
+          "sampled_reference_points": {
+            "row": [
+              2031,
+              751,
+              2415,
+              2246,
+              1453,
+              1660,
+              1430,
+              2545,
+              691,
+              2504
+            ],
+            "col": [
+              3307,
+              541,
+              1678,
+              777,
+              3344,
+              909,
+              2207,
+              1013,
+              994,
+              2712
+            ],
+            "elevation_m": [
+              265.7164611816406,
+              266.987548828125,
+              268.3924865722656,
+              276.83697509765625,
+              272.382568359375,
+              270.8631591796875,
+              273.48602294921875,
+              279.44061279296875,
+              281.9112548828125,
+              273.09869384765625
+            ]
+          },
+          "sampled_reference_range_m": 16.194793701171875,
+          "resid_abs_mean_m": 2.818707305918747,
+          "resid_abs_max_m": 9.353708589675989,
+          "normalized_residual_mean_B2": 0.17405021378659377,
+          "normalized_residual_max_B2": 0.577575038143224,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 4,
+          "method": "ransac",
+          "a": 2.5127002411042625,
+          "b": 265.09264677243635,
+          "n_points": 10,
+          "inliers": 6,
+          "inlier_ratio": 0.6,
+          "sampled_reference_points": {
+            "row": [
+              1811,
+              1632,
+              1260,
+              741,
+              1938,
+              2336,
+              2454,
+              1690,
+              1766,
+              1400
+            ],
+            "col": [
+              11,
+              201,
+              521,
+              2214,
+              3118,
+              2090,
+              351,
+              708,
+              115,
+              1743
+            ],
+            "elevation_m": [
+              272.3222961425781,
+              273.8640441894531,
+              268.42816162109375,
+              271.07989501953125,
+              265.2348937988281,
+              267.31072998046875,
+              272.52044677734375,
+              269.8506774902344,
+              274.4469909667969,
+              269.3343811035156
+            ]
+          },
+          "sampled_reference_range_m": 9.21209716796875,
+          "resid_abs_mean_m": 2.554597888922507,
+          "resid_abs_max_m": 5.520929497937345,
+          "normalized_residual_mean_B2": 0.2773090472607109,
+          "normalized_residual_max_B2": 0.5993129900034152,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        }
+      ],
+      "group": "known_good_most_heterogeneous_available",
+      "selection_rationale": "highest cross-patch relief ratio among test-split areas (see prior per-area audit); n=28 test patches, matches Mount Adams sample size"
+    },
+    "vaihingen_area6": {
+      "scene": "vaihingen_area6",
+      "shape_hw": [
+        2557,
+        1887
+      ],
+      "elevation_range_m_full_scene": 67.16436767578125,
+      "elevation_range_m_full_scene_NOTE": "diagnostic context only -- NOT the B2 normalization denominator; see signal_B_sparse10_ransac_on_blended[*].sampled_reference_range_m for the corrected, runtime-computable denominator",
+      "sliding_window_plan": {
+        "height": 2557,
+        "width": 1887,
+        "window": 512,
+        "stride": 384,
+        "n_windows": 35
+      },
+      "n_grid_windows_nonoverlap": 12,
+      "signal_A_raw_tile_relief_heterogeneity": {
+        "representation": "RAW_TILE (predict_depth output, pre-blend, sliding window plan)",
+        "n": 35,
+        "min": 3.1097192764282227,
+        "max": 5.957174777984619,
+        "mean": 4.413620785304478,
+        "std": 0.7781090109536919,
+        "ratio_max_min": 1.915663199292684,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.17629720558333226
+      },
+      "signal_A_blended_grid_relief_heterogeneity": {
+        "representation": "BLENDED (blend_tiles output, non-overlapping grid)",
+        "n": 12,
+        "min": 2.7576797008514404,
+        "max": 5.9319305419921875,
+        "mean": 4.318367083867391,
+        "std": 0.8297951106787852,
+        "ratio_max_min": 2.1510585657067747,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.19215483412207918
+      },
+      "signal_A_normalized_grid_relief_heterogeneity": {
+        "representation": "NORMALIZED (relative_dsm.normalize_relative output, non-overlapping grid)",
+        "normalize_relative_meta": {
+          "method": "percentile_clip",
+          "low_pct": 2.0,
+          "high_pct": 98.0,
+          "low_value": 0.3483794331550598,
+          "high_value": 4.465392112731934,
+          "degenerate": false,
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "invertible_as": "raw = value*(hi-lo)+lo, /depth_sign"
+        },
+        "n": 12,
+        "min": 0.6698254346847534,
+        "max": 1.0,
+        "mean": 0.9298345148563385,
+        "std": 0.09398592931211858,
+        "ratio_max_min": 1.4929262882808263,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.10107812498941235
+      },
+      "diagnostic_only_gt_grid_relief_heterogeneity": {
+        "representation": "GROUND TRUTH -- diagnostic context only, NEVER a runtime input",
+        "n": 12,
+        "min": 15.2147216796875,
+        "max": 43.5489501953125,
+        "mean": 28.263173421223957,
+        "std": 8.093883819379137,
+        "ratio_max_min": 2.862290294370141,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.28637562027274377
+      },
+      "signal_B_sparse10_ransac_on_blended": [
+        {
+          "seed": 0,
+          "method": "ransac",
+          "a": 7.371817141172924,
+          "b": 270.7523628735597,
+          "n_points": 10,
+          "inliers": 8,
+          "inlier_ratio": 0.8,
+          "sampled_reference_points": {
+            "row": [
+              601,
+              1470,
+              517,
+              1678,
+              455,
+              69,
+              1201,
+              1295,
+              1157,
+              1654
+            ],
+            "col": [
+              1024,
+              507,
+              880,
+              1814,
+              1700,
+              773,
+              322,
+              1010,
+              1869,
+              117
+            ],
+            "elevation_m": [
+              291.55499267578125,
+              280.8638000488281,
+              291.0373229980469,
+              271.78912353515625,
+              279.3792419433594,
+              294.7447509765625,
+              287.3171691894531,
+              278.33160400390625,
+              273.61395263671875,
+              280.94830322265625
+            ]
+          },
+          "sampled_reference_range_m": 22.95562744140625,
+          "resid_abs_mean_m": 6.166140551296519,
+          "resid_abs_max_m": 15.759355901836159,
+          "normalized_residual_mean_B2": 0.26861128353104097,
+          "normalized_residual_max_B2": 0.6865138381454212,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 1,
+          "method": "ransac",
+          "a": 2.2921378550071663,
+          "b": 274.8284568269096,
+          "n_points": 10,
+          "inliers": 7,
+          "inlier_ratio": 0.7,
+          "sampled_reference_points": {
+            "row": [
+              52,
+              1083,
+              569,
+              520,
+              1227,
+              1214,
+              56,
+              2460,
+              838,
+              1104
+            ],
+            "col": [
+              62,
+              636,
+              1294,
+              1884,
+              225,
+              1477,
+              820,
+              415,
+              1442,
+              1130
+            ],
+            "elevation_m": [
+              318.55889892578125,
+              282.048583984375,
+              286.4183349609375,
+              274.2034912109375,
+              294.0509338378906,
+              276.27764892578125,
+              292.3680725097656,
+              276.2542419433594,
+              281.0632019042969,
+              275.3667297363281
+            ]
+          },
+          "sampled_reference_range_m": 44.35540771484375,
+          "resid_abs_mean_m": 8.668621441267856,
+          "resid_abs_max_m": 35.400828837662004,
+          "normalized_residual_mean_B2": 0.19543550353538652,
+          "normalized_residual_max_B2": 0.7981175387959504,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 2,
+          "method": "ransac",
+          "a": 5.357346913054575,
+          "b": 267.47774296219137,
+          "n_points": 10,
+          "inliers": 9,
+          "inlier_ratio": 0.9,
+          "sampled_reference_points": {
+            "row": [
+              2161,
+              2272,
+              367,
+              2456,
+              2363,
+              1682,
+              814,
+              386,
+              1553,
+              1770
+            ],
+            "col": [
+              208,
+              287,
+              449,
+              613,
+              963,
+              323,
+              1696,
+              1691,
+              1114,
+              669
+            ],
+            "elevation_m": [
+              288.5216064453125,
+              270.6447448730469,
+              294.8551330566406,
+              266.3659362792969,
+              285.2769775390625,
+              290.9111022949219,
+              272.2377624511719,
+              283.5452575683594,
+              280.0195617675781,
+              273.6163330078125
+            ]
+          },
+          "sampled_reference_range_m": 28.48919677734375,
+          "resid_abs_mean_m": 3.918259296110682,
+          "resid_abs_max_m": 24.381022104982492,
+          "normalized_residual_mean_B2": 0.13753491636614718,
+          "normalized_residual_max_B2": 0.855798859319603,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 3,
+          "method": "ransac",
+          "a": 10.871250904948218,
+          "b": 259.80400653410607,
+          "n_points": 10,
+          "inliers": 7,
+          "inlier_ratio": 0.7,
+          "sampled_reference_points": {
+            "row": [
+              2037,
+              753,
+              2422,
+              2253,
+              1457,
+              1665,
+              1434,
+              2552,
+              693,
+              2511
+            ],
+            "col": [
+              1635,
+              267,
+              829,
+              384,
+              1654,
+              449,
+              1091,
+              501,
+              491,
+              1341
+            ],
+            "elevation_m": [
+              267.1585693359375,
+              309.50616455078125,
+              286.1298828125,
+              274.9927978515625,
+              270.8163146972656,
+              280.8274230957031,
+              275.86163330078125,
+              275.48260498046875,
+              292.4244384765625,
+              274.670654296875
+            ]
+          },
+          "sampled_reference_range_m": 42.34759521484375,
+          "resid_abs_mean_m": 6.167160280522074,
+          "resid_abs_max_m": 17.75157994576881,
+          "normalized_residual_mean_B2": 0.145631888876664,
+          "normalized_residual_max_B2": 0.41918743805188957,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 4,
+          "method": "ransac",
+          "a": 2.3388707898793797,
+          "b": 279.9872705548463,
+          "n_points": 10,
+          "inliers": 8,
+          "inlier_ratio": 0.8,
+          "sampled_reference_points": {
+            "row": [
+              1816,
+              1636,
+              1263,
+              743,
+              1944,
+              2342,
+              2460,
+              1694,
+              1770,
+              1404
+            ],
+            "col": [
+              5,
+              99,
+              257,
+              1095,
+              1541,
+              1033,
+              174,
+              350,
+              57,
+              862
+            ],
+            "elevation_m": [
+              285.6820373535156,
+              282.7730712890625,
+              286.87579345703125,
+              279.4105529785156,
+              267.9351501464844,
+              285.4898376464844,
+              272.82098388671875,
+              291.3155822753906,
+              281.70709228515625,
+              282.9515075683594
+            ]
+          },
+          "sampled_reference_range_m": 23.38043212890625,
+          "resid_abs_mean_m": 3.601024199871307,
+          "resid_abs_max_m": 13.559814173801954,
+          "normalized_residual_mean_B2": 0.15401871873100254,
+          "normalized_residual_max_B2": 0.5799642238877768,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        }
+      ],
+      "group": "known_good_high_absolute_relief",
+      "selection_rationale": "highest absolute full-scene relief among test-split areas; n=12 test patches"
+    },
+    "vaihingen_area34": {
+      "scene": "vaihingen_area34",
+      "shape_hw": [
+        2555,
+        1388
+      ],
+      "elevation_range_m_full_scene": 27.708175659179688,
+      "elevation_range_m_full_scene_NOTE": "diagnostic context only -- NOT the B2 normalization denominator; see signal_B_sparse10_ransac_on_blended[*].sampled_reference_range_m for the corrected, runtime-computable denominator",
+      "sliding_window_plan": {
+        "height": 2555,
+        "width": 1388,
+        "window": 512,
+        "stride": 384,
+        "n_windows": 28
+      },
+      "n_grid_windows_nonoverlap": 8,
+      "signal_A_raw_tile_relief_heterogeneity": {
+        "representation": "RAW_TILE (predict_depth output, pre-blend, sliding window plan)",
+        "n": 28,
+        "min": 2.7913832664489746,
+        "max": 4.732072353363037,
+        "mean": 3.823607223374503,
+        "std": 0.5162008076460195,
+        "ratio_max_min": 1.6952427888495898,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.13500361765465266
+      },
+      "signal_A_blended_grid_relief_heterogeneity": {
+        "representation": "BLENDED (blend_tiles output, non-overlapping grid)",
+        "n": 8,
+        "min": 3.424811363220215,
+        "max": 4.587491512298584,
+        "mean": 3.770722985267639,
+        "std": 0.3630383266486731,
+        "ratio_max_min": 1.339487354417426,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.09627817478692492
+      },
+      "signal_A_normalized_grid_relief_heterogeneity": {
+        "representation": "NORMALIZED (relative_dsm.normalize_relative output, non-overlapping grid)",
+        "normalize_relative_meta": {
+          "method": "percentile_clip",
+          "low_pct": 2.0,
+          "high_pct": 98.0,
+          "low_value": 0.4425289034843445,
+          "high_value": 3.907869577407837,
+          "degenerate": false,
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "invertible_as": "raw = value*(hi-lo)+lo, /depth_sign"
+        },
+        "n": 8,
+        "min": 0.9656314253807068,
+        "max": 1.0,
+        "mean": 0.9836779087781906,
+        "std": 0.014730002204990978,
+        "ratio_max_min": 1.0355918145536152,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.014974415988752722
+      },
+      "diagnostic_only_gt_grid_relief_heterogeneity": {
+        "representation": "GROUND TRUTH -- diagnostic context only, NEVER a runtime input",
+        "n": 8,
+        "min": 15.124237060546875,
+        "max": 22.819046020507812,
+        "mean": 17.356569290161133,
+        "std": 2.4467699529584057,
+        "ratio_max_min": 1.508773363519515,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.14097082851191098
+      },
+      "signal_B_sparse10_ransac_on_blended": [
+        {
+          "seed": 0,
+          "method": "ransac",
+          "a": 4.203073972479326,
+          "b": 257.5924765671084,
+          "n_points": 10,
+          "inliers": 10,
+          "inlier_ratio": 1.0,
+          "sampled_reference_points": {
+            "row": [
+              601,
+              1469,
+              517,
+              1677,
+              454,
+              69,
+              1200,
+              1294,
+              1156,
+              1653
+            ],
+            "col": [
+              753,
+              373,
+              648,
+              1334,
+              1250,
+              569,
+              236,
+              742,
+              1375,
+              86
+            ],
+            "elevation_m": [
+              268.75567626953125,
+              269.4684143066406,
+              261.8553161621094,
+              261.24639892578125,
+              265.8753356933594,
+              268.4134826660156,
+              260.9253845214844,
+              275.23193359375,
+              262.1079406738281,
+              264.5339050292969
+            ]
+          },
+          "sampled_reference_range_m": 14.306549072265625,
+          "resid_abs_mean_m": 1.2254813232053607,
+          "resid_abs_max_m": 2.5134878024049385,
+          "normalized_residual_mean_B2": 0.08565876487860047,
+          "normalized_residual_max_B2": 0.17568791675118448,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 1,
+          "method": "ransac",
+          "a": 3.5965315761322594,
+          "b": 259.5277167024299,
+          "n_points": 10,
+          "inliers": 9,
+          "inlier_ratio": 0.9,
+          "sampled_reference_points": {
+            "row": [
+              51,
+              1082,
+              568,
+              520,
+              1226,
+              1213,
+              56,
+              2458,
+              838,
+              1103
+            ],
+            "col": [
+              45,
+              468,
+              952,
+              1385,
+              165,
+              1086,
+              603,
+              305,
+              1061,
+              831
+            ],
+            "elevation_m": [
+              262.2229309082031,
+              262.221923828125,
+              261.41357421875,
+              265.86041259765625,
+              269.1879577636719,
+              261.8096008300781,
+              268.3265380859375,
+              264.67669677734375,
+              264.0509033203125,
+              264.4835510253906
+            ]
+          },
+          "sampled_reference_range_m": 7.774383544921875,
+          "resid_abs_mean_m": 1.0900984827055082,
+          "resid_abs_max_m": 4.513735388767202,
+          "normalized_residual_mean_B2": 0.14021670996892688,
+          "normalized_residual_max_B2": 0.5805907777363923,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 2,
+          "method": "ransac",
+          "a": 2.960487580304241,
+          "b": 260.32010875213416,
+          "n_points": 10,
+          "inliers": 10,
+          "inlier_ratio": 1.0,
+          "sampled_reference_points": {
+            "row": [
+              2159,
+              2270,
+              367,
+              2454,
+              2361,
+              1681,
+              814,
+              386,
+              1552,
+              1769
+            ],
+            "col": [
+              153,
+              211,
+              330,
+              451,
+              708,
+              238,
+              1247,
+              1244,
+              819,
+              492
+            ],
+            "elevation_m": [
+              270.0603942871094,
+              267.23748779296875,
+              261.9632263183594,
+              264.3279113769531,
+              263.661376953125,
+              266.1164855957031,
+              261.545654296875,
+              268.3343505859375,
+              261.8849792480469,
+              271.3518371582031
+            ]
+          },
+          "sampled_reference_range_m": 9.806182861328125,
+          "resid_abs_mean_m": 0.8031015899352951,
+          "resid_abs_max_m": 1.8345328942494916,
+          "normalized_residual_mean_B2": 0.0818974723694399,
+          "normalized_residual_max_B2": 0.18707920504768427,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 3,
+          "method": "ransac",
+          "a": 2.68757100639764,
+          "b": 260.9680331243381,
+          "n_points": 10,
+          "inliers": 9,
+          "inlier_ratio": 0.9,
+          "sampled_reference_points": {
+            "row": [
+              2035,
+              752,
+              2420,
+              2251,
+              1456,
+              1664,
+              1433,
+              2550,
+              693,
+              2509
+            ],
+            "col": [
+              1202,
+              197,
+              610,
+              282,
+              1216,
+              330,
+              802,
+              368,
+              361,
+              986
+            ],
+            "elevation_m": [
+              261.8874206542969,
+              272.1537170410156,
+              264.7111511230469,
+              266.3956298828125,
+              270.24749755859375,
+              266.771728515625,
+              267.7555236816406,
+              264.7001953125,
+              261.7022705078125,
+              264.3155517578125
+            ]
+          },
+          "sampled_reference_range_m": 10.451446533203125,
+          "resid_abs_mean_m": 1.13430807280634,
+          "resid_abs_max_m": 4.483330476299216,
+          "normalized_residual_mean_B2": 0.10853120371450639,
+          "normalized_residual_max_B2": 0.42896746034686734,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 4,
+          "method": "ransac",
+          "a": 2.913396563155672,
+          "b": 260.12969504966344,
+          "n_points": 10,
+          "inliers": 8,
+          "inlier_ratio": 0.8,
+          "sampled_reference_points": {
+            "row": [
+              1814,
+              1635,
+              1262,
+              743,
+              1942,
+              2341,
+              2458,
+              1693,
+              1769,
+              1402
+            ],
+            "col": [
+              4,
+              73,
+              189,
+              805,
+              1134,
+              760,
+              127,
+              257,
+              41,
+              634
+            ],
+            "elevation_m": [
+              264.1896057128906,
+              263.3986511230469,
+              270.41082763671875,
+              263.7023010253906,
+              271.2854309082031,
+              266.3219909667969,
+              266.3830871582031,
+              267.7888488769531,
+              265.2988586425781,
+              266.1879577636719
+            ]
+          },
+          "sampled_reference_range_m": 7.88677978515625,
+          "resid_abs_mean_m": 1.2429974323437307,
+          "resid_abs_max_m": 3.0981490613976916,
+          "normalized_residual_mean_B2": 0.15760519073743923,
+          "normalized_residual_max_B2": 0.3928281435255406,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        }
+      ],
+      "group": "known_good_ordinary",
+      "selection_rationale": "lowest cross-patch relief ratio among test-split areas; n=8 test patches (smallest group -- noted as a sample-size limitation)"
+    },
+    "vaihingen_area8": {
+      "scene": "vaihingen_area8",
+      "shape_hw": [
+        2557,
+        1887
+      ],
+      "elevation_range_m_full_scene": 30.683074951171875,
+      "elevation_range_m_full_scene_NOTE": "diagnostic context only -- NOT the B2 normalization denominator; see signal_B_sparse10_ransac_on_blended[*].sampled_reference_range_m for the corrected, runtime-computable denominator",
+      "sliding_window_plan": {
+        "height": 2557,
+        "width": 1887,
+        "window": 512,
+        "stride": 384,
+        "n_windows": 35
+      },
+      "n_grid_windows_nonoverlap": 12,
+      "signal_A_raw_tile_relief_heterogeneity": {
+        "representation": "RAW_TILE (predict_depth output, pre-blend, sliding window plan)",
+        "n": 35,
+        "min": 2.9543838500976562,
+        "max": 4.826436996459961,
+        "mean": 4.0158165795462475,
+        "std": 0.4385064963126257,
+        "ratio_max_min": 1.6336526468286863,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.1091948518132203
+      },
+      "signal_A_blended_grid_relief_heterogeneity": {
+        "representation": "BLENDED (blend_tiles output, non-overlapping grid)",
+        "n": 12,
+        "min": 3.2678914070129395,
+        "max": 4.557449817657471,
+        "mean": 4.035054008165996,
+        "std": 0.33961557016591,
+        "ratio_max_min": 1.394614829573933,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.08416630099091818
+      },
+      "signal_A_normalized_grid_relief_heterogeneity": {
+        "representation": "NORMALIZED (relative_dsm.normalize_relative output, non-overlapping grid)",
+        "normalize_relative_meta": {
+          "method": "percentile_clip",
+          "low_pct": 2.0,
+          "high_pct": 98.0,
+          "low_value": 0.3382927179336548,
+          "high_value": 3.888911247253418,
+          "degenerate": false,
+          "output_range": [
+            0.0,
+            1.0
+          ],
+          "invertible_as": "raw = value*(hi-lo)+lo, /depth_sign"
+        },
+        "n": 12,
+        "min": 0.9001205563545227,
+        "max": 1.0,
+        "mean": 0.981090580423673,
+        "std": 0.02783036925054532,
+        "ratio_max_min": 1.1109622960395302,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.028366768375787572
+      },
+      "diagnostic_only_gt_grid_relief_heterogeneity": {
+        "representation": "GROUND TRUTH -- diagnostic context only, NEVER a runtime input",
+        "n": 12,
+        "min": 13.443023681640625,
+        "max": 26.159942626953125,
+        "mean": 19.35668182373047,
+        "std": 3.97281608794354,
+        "ratio_max_min": 1.9459865017332538,
+        "ratio_denominator_near_zero": false,
+        "cv": 0.20524261978998054
+      },
+      "signal_B_sparse10_ransac_on_blended": [
+        {
+          "seed": 0,
+          "method": "ransac",
+          "a": 2.9460703582667658,
+          "b": 275.52097430609314,
+          "n_points": 10,
+          "inliers": 7,
+          "inlier_ratio": 0.7,
+          "sampled_reference_points": {
+            "row": [
+              601,
+              1470,
+              517,
+              1678,
+              455,
+              69,
+              1201,
+              1295,
+              1157,
+              1654
+            ],
+            "col": [
+              1024,
+              507,
+              880,
+              1814,
+              1700,
+              773,
+              322,
+              1010,
+              1869,
+              117
+            ],
+            "elevation_m": [
+              279.52203369140625,
+              277.8717041015625,
+              277.7823791503906,
+              282.4933776855469,
+              282.6283874511719,
+              278.5325927734375,
+              279.7820129394531,
+              278.5364990234375,
+              289.70989990234375,
+              289.2003173828125
+            ]
+          },
+          "sampled_reference_range_m": 11.927520751953125,
+          "resid_abs_mean_m": 1.8243939210548603,
+          "resid_abs_max_m": 5.213191332498013,
+          "normalized_residual_mean_B2": 0.15295667548984282,
+          "normalized_residual_max_B2": 0.4370725015627708,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 1,
+          "method": "ransac",
+          "a": 2.851027440609196,
+          "b": 277.00514755155507,
+          "n_points": 10,
+          "inliers": 9,
+          "inlier_ratio": 0.9,
+          "sampled_reference_points": {
+            "row": [
+              52,
+              1083,
+              569,
+              520,
+              1227,
+              1214,
+              56,
+              2460,
+              838,
+              1104
+            ],
+            "col": [
+              62,
+              636,
+              1294,
+              1884,
+              225,
+              1477,
+              820,
+              415,
+              1442,
+              1130
+            ],
+            "elevation_m": [
+              287.1548767089844,
+              276.9700012207031,
+              285.6278381347656,
+              284.1286926269531,
+              283.61541748046875,
+              281.9450378417969,
+              283.6824645996094,
+              279.023681640625,
+              279.89276123046875,
+              279.6109619140625
+            ]
+          },
+          "sampled_reference_range_m": 10.18487548828125,
+          "resid_abs_mean_m": 1.135684590268994,
+          "resid_abs_max_m": 2.598501590287242,
+          "normalized_residual_mean_B2": 0.11150696850204171,
+          "normalized_residual_max_B2": 0.2551333684223323,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 2,
+          "method": "ransac",
+          "a": 3.639180412147333,
+          "b": 277.31825444598843,
+          "n_points": 10,
+          "inliers": 10,
+          "inlier_ratio": 1.0,
+          "sampled_reference_points": {
+            "row": [
+              2161,
+              2272,
+              367,
+              2456,
+              2363,
+              1682,
+              814,
+              386,
+              1553,
+              1770
+            ],
+            "col": [
+              208,
+              287,
+              449,
+              613,
+              963,
+              323,
+              1696,
+              1691,
+              1114,
+              669
+            ],
+            "elevation_m": [
+              288.361572265625,
+              283.54833984375,
+              282.3685302734375,
+              290.79052734375,
+              287.53375244140625,
+              276.8717956542969,
+              281.5993957519531,
+              283.6592102050781,
+              278.99212646484375,
+              276.9941711425781
+            ]
+          },
+          "sampled_reference_range_m": 13.918731689453125,
+          "resid_abs_mean_m": 1.4960854160242092,
+          "resid_abs_max_m": 2.414776700991581,
+          "normalized_residual_mean_B2": 0.10748719419297832,
+          "normalized_residual_max_B2": 0.17349114523282105,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 3,
+          "method": "ransac",
+          "a": 2.9735534621141846,
+          "b": 278.32810504459843,
+          "n_points": 10,
+          "inliers": 9,
+          "inlier_ratio": 0.9,
+          "sampled_reference_points": {
+            "row": [
+              2037,
+              753,
+              2422,
+              2253,
+              1457,
+              1665,
+              1434,
+              2552,
+              693,
+              2511
+            ],
+            "col": [
+              1635,
+              267,
+              829,
+              384,
+              1654,
+              449,
+              1091,
+              501,
+              491,
+              1341
+            ],
+            "elevation_m": [
+              280.9364929199219,
+              284.4415588378906,
+              279.71490478515625,
+              288.83709716796875,
+              282.2339782714844,
+              276.8318786621094,
+              281.33404541015625,
+              280.4297180175781,
+              288.8961486816406,
+              289.40032958984375
+            ]
+          },
+          "sampled_reference_range_m": 12.568450927734375,
+          "resid_abs_mean_m": 1.3737753138644166,
+          "resid_abs_max_m": 3.232919101278924,
+          "normalized_residual_mean_B2": 0.1093034711885578,
+          "normalized_residual_max_B2": 0.25722494521142225,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        },
+        {
+          "seed": 4,
+          "method": "ransac",
+          "a": 4.911200753082413,
+          "b": 273.46567760736286,
+          "n_points": 10,
+          "inliers": 9,
+          "inlier_ratio": 0.9,
+          "sampled_reference_points": {
+            "row": [
+              1816,
+              1636,
+              1263,
+              743,
+              1944,
+              2342,
+              2460,
+              1694,
+              1770,
+              1404
+            ],
+            "col": [
+              5,
+              99,
+              257,
+              1095,
+              1541,
+              1033,
+              174,
+              350,
+              57,
+              862
+            ],
+            "elevation_m": [
+              276.1077880859375,
+              285.7306213378906,
+              279.64013671875,
+              282.1078796386719,
+              281.81781005859375,
+              294.4439697265625,
+              290.8382263183594,
+              276.8025207519531,
+              276.1327819824219,
+              279.975830078125
+            ]
+          },
+          "sampled_reference_range_m": 18.336181640625,
+          "resid_abs_mean_m": 1.99774082969235,
+          "resid_abs_max_m": 7.3962896523632935,
+          "normalized_residual_mean_B2": 0.10895075478889375,
+          "normalized_residual_max_B2": 0.40337131237707274,
+          "candidate_diagnostic_evaluable": true,
+          "candidate_diagnostic_status": "evaluable",
+          "fit_valid_for_metric": true,
+          "existing_fit_rejection_reason": null
+        }
+      ],
+      "group": "known_good_ordinary",
+      "selection_rationale": "low cross-patch relief ratio; n=12 test patches"
+    }
+  },
+  "IMPORTANT": "This file records candidate-signal DISTRIBUTIONS across real scenes, not a validated detector or a threshold. See DW_S1_11_HILLY_RISK_METHODOLOGY.md for the classification of each signal and the current STOP/GO decision. diagnostic_only_gt_* and elevation_range_m_full_scene fields are ground truth / oracle-only context and must never be treated as runtime-available."
+}

@@ -1,0 +1,4 @@
+# Test/development dependencies. Install with: pip install -r requirements-dev.txt
+# (torch==2.9.0+cu129 in requirements.txt needs the cu129 wheel index.)
+-r requirements.txt
+pytest==9.1.1

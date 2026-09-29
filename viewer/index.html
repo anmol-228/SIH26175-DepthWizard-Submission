@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>DepthWizard Viewer</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #10161f; color: #e8eef5;
+               font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; }
+  #canvas-wrap { position: relative; width: 100%; height: 100%; }
+  canvas { display: block; }
+  #hud { position: absolute; top: 10px; left: 12px; font-size: 12px; line-height: 1.5;
+         background: rgba(10,16,24,.72); border: 1px solid #22364d; border-radius: 8px;
+         padding: 8px 12px; pointer-events: none; }
+  #hud b { color: #4f8ff7; }
+  #hud .err { color: #e0573c; }
+  /* P0-A2 fix: reference-panel and #help used to both sit at bottom:10px;left:12px
+     and silently overlapped once #help's text grew to three lines -- reference-panel's
+     status text was rendering directly underneath/behind #help, invisible. Both now
+     live in this flex column stack instead of independent fixed pixel offsets, so
+     they can never overlap regardless of either one's text length. --help-- sits above
+     --reference-panel-- (visually: help text, then the reference panel below it). */
+  #bottom-left-stack { position: absolute; bottom: 10px; left: 12px;
+                        display: flex; flex-direction: column-reverse; gap: 8px;
+                        align-items: flex-start; }
+  #help { font-size: 11.5px; color: #8a9bb0;
+          background: rgba(10,16,24,.72); border: 1px solid #22364d; border-radius: 8px;
+          padding: 6px 10px; max-width: 420px; }
+  #branch-banner { position: absolute; top: 10px; left: 50%; transform: translateX(-50%);
+                   font-size: 12px; font-weight: 600; color: #f5d76e;
+                   background: rgba(74,58,10,.85); border: 1px solid #8a6d1a; border-radius: 8px;
+                   padding: 6px 14px; display: none; pointer-events: none; }
+  #branch-banner.show { display: block; }
+  /* DW-WP2 / IF-1: visible, non-dismissable explanation when a mesh has no matching
+     viewer_input_v1 sidecar - measurements are disabled and this is why, never a
+     silent no-op. Deliberately styled distinctly from branch-banner (red, not amber)
+     since "no data" and "uncalibrated but known" are different situations. */
+  #sidecar-status { position: absolute; top: 42px; left: 50%; transform: translateX(-50%);
+                     font-size: 12px; font-weight: 600; color: #ffb4a8;
+                     background: rgba(60,16,12,.9); border: 1px solid #a33a2a; border-radius: 8px;
+                     padding: 6px 14px; display: none; pointer-events: none; max-width: 480px;
+                     text-align: center; }
+  #sidecar-status.show { display: block; }
+  #placeholder-badge { position: absolute; top: 74px; left: 50%; transform: translateX(-50%);
+                        font-size: 11px; font-weight: 600; color: #9fb4c9;
+                        background: rgba(20,28,38,.85); border: 1px solid #3a4f66;
+                        border-radius: 8px; padding: 4px 10px; display: none; pointer-events: none;
+                        margin-top: 0; }
+  #placeholder-badge.show { display: block; }
+  #pick-readout { position: absolute; top: 10px; right: 12px; font-size: 12px; line-height: 1.5;
+         background: rgba(10,16,24,.72); border: 1px solid #22364d; border-radius: 8px;
+         padding: 8px 12px; pointer-events: none; min-width: 190px; }
+  #pick-readout b { color: #3ecf8e; }
+  #pick-readout .unit-warning { color: #e0a83c; font-size: 10.5px; }
+  #measure-panel { position: absolute; bottom: 10px; right: 12px; font-size: 12px; line-height: 1.5;
+         background: rgba(10,16,24,.85); border: 1px solid #22364d; border-radius: 8px;
+         padding: 10px 14px; display: none; min-width: 260px; }
+  #measure-panel.show { display: block; }
+  #measure-panel b { color: #4f8ff7; }
+  #measure-panel .slope { color: #e0a83c; }
+  #profile-canvas { background: #0b1420; border: 1px solid #22364d; border-radius: 6px;
+                    margin-top: 6px; display: block; }
+  /* P0-A2: reference-DSM comparison panel. Now part of #bottom-left-stack (see above)
+     instead of its own independent bottom:10px;left:12px position, which is what
+     caused it to render invisibly behind #help. */
+  #reference-panel { font-size: 12px; line-height: 1.6;
+         background: rgba(10,16,24,.85); border: 1px solid #22364d; border-radius: 8px;
+         padding: 10px 14px; min-width: 260px; pointer-events: auto; }
+  #reference-panel b { color: #4f8ff7; }
+  #reference-status { color: #e0a83c; font-size: 11px; margin-top: 4px; }
+  #reference-result { margin-top: 6px; }
+  #upload-panel { font-size: 12px; line-height: 1.6;
+         background: rgba(10,16,24,.85); border: 1px solid #22364d; border-radius: 8px;
+         padding: 10px 14px; min-width: 260px; pointer-events: auto; }
+  #upload-panel b { color: #4f8ff7; }
+  #upload-status { color: #e0a83c; font-size: 11px; margin-top: 4px; white-space: pre-wrap; }
+</style>
+</head>
+<body>
+<div id="canvas-wrap">
+  <div id="hud">
+    <div>mode: <b id="hud-mode">orbit</b></div>
+    <div>load time: <b id="hud-load">—</b></div>
+    <div>triangles: <b id="hud-tris">—</b></div>
+    <div>fps: <b id="hud-fps">—</b></div>
+    <div>tier: <b id="hud-tier">—</b></div>
+    <div>vertical scale: <b id="hud-vexag">—</b></div>
+  </div>
+  <div id="branch-banner"></div>
+  <div id="sidecar-status"></div>
+  <div id="placeholder-badge">synthetic placeholder mesh</div>
+  <div id="pick-readout">
+    <div>click height: <b id="pick-value">—</b></div>
+    <div class="unit-warning" id="pick-warning"></div>
+  </div>
+  <div id="measure-panel">
+    <div>distance: <b id="m-dist">—</b></div>
+    <div>Δheight: <b id="m-dh">—</b></div>
+    <div class="slope">slope: <b id="m-slope">—</b></div>
+    <canvas id="profile-canvas" width="240" height="80"></canvas>
+  </div>
+  <div id="bottom-left-stack">
+    <div id="help">Orbit: drag / scroll. Press <b>F</b> to toggle fly mode (WASD + drag to look). Press <b>L</b> to cycle mesh tier. Press <b>[</b> / <b>]</b> to change the display-only vertical scale.
+      Click the surface for a height readout. Press <b>M</b>, then click two points for distance / slope / elevation profile.
+      Load a reference .tif and press <b>R</b>, then click, to compare against a reference dataset (metric branch only).
+      Upload a JPG/PNG to run the real pipeline on it and view the result.</div>
+    <div id="reference-panel">
+      <div>Reference DSM: <input type="file" id="reference-file-input" accept=".tif,.tiff"></div>
+      <div id="reference-status"></div>
+      <div id="reference-result" style="display:none">
+        <div>estimated: <b id="ref-estimated">—</b></div>
+        <div>reference: <b id="ref-reference">—</b></div>
+        <div>Δ: <b id="ref-delta">—</b></div>
+      </div>
+    </div>
+    <div id="upload-panel">
+      <div>Upload image: <input type="file" id="upload-file-input" accept=".jpg,.jpeg,.png"></div>
+      <div id="upload-status"></div>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{
+  "imports": {
+    "three": "./vendor/three.module.js"
+  }
+}
+</script>
+<script type="module" src="./main.js"></script>
+</body>
+</html>

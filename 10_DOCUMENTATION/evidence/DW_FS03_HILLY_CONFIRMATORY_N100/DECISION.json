@@ -1,0 +1,80 @@
+{
+  "coverage_threshold": 0.8,
+  "mount_adams_table": [
+    {
+      "seed": 0,
+      "global_rmse": null,
+      "local_rmse": 38.502767412577136,
+      "rmse_delta": null,
+      "local_metric_coverage": 0.387253810048755,
+      "positive_mount_adams_seed": false
+    },
+    {
+      "seed": 1,
+      "global_rmse": null,
+      "local_rmse": 38.37280018537113,
+      "rmse_delta": null,
+      "local_metric_coverage": 0.3872585832641975,
+      "positive_mount_adams_seed": false
+    },
+    {
+      "seed": 2,
+      "global_rmse": null,
+      "local_rmse": 55.4817325166241,
+      "rmse_delta": null,
+      "local_metric_coverage": 0.4468411542089532,
+      "positive_mount_adams_seed": false
+    },
+    {
+      "seed": 3,
+      "global_rmse": null,
+      "local_rmse": 35.445526340662944,
+      "rmse_delta": null,
+      "local_metric_coverage": 0.3872660840313214,
+      "positive_mount_adams_seed": false
+    },
+    {
+      "seed": 4,
+      "global_rmse": null,
+      "local_rmse": 61.92659894259264,
+      "rmse_delta": null,
+      "local_metric_coverage": 0.4766155629553023,
+      "positive_mount_adams_seed": false
+    }
+  ],
+  "positive_seed_count": 0,
+  "positive_seed_count_required": 4,
+  "control_table": [
+    {
+      "scene": "vaihingen_area6",
+      "median_global_rmse": 11.014475446311854,
+      "median_local_rmse": 8.111079408680286,
+      "median_local_metric_coverage": 0.6519586108169321,
+      "degraded": true
+    },
+    {
+      "scene": "vaihingen_area8",
+      "median_global_rmse": 2.328610130276178,
+      "median_local_rmse": 2.1397351950508923,
+      "median_local_metric_coverage": 0.6519586108169321,
+      "degraded": true
+    },
+    {
+      "scene": "vaihingen_area34",
+      "median_global_rmse": 1.931282917009346,
+      "median_local_rmse": 2.293425899097282,
+      "median_local_metric_coverage": 0.5913570671059163,
+      "degraded": true
+    },
+    {
+      "scene": "vaihingen_area38",
+      "median_global_rmse": 2.8434184770765043,
+      "median_local_rmse": 2.534726046577216,
+      "median_local_metric_coverage": 0.7543114523273621,
+      "degraded": true
+    }
+  ],
+  "degraded_control_count": 4,
+  "degraded_control_count_allowed": 0,
+  "STOPPING_RULE_PASS": false
+}

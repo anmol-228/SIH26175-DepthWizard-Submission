@@ -1,0 +1,21 @@
+{
+  "iteration": 2,
+  "description": "Loop-C improvement pass: unfreeze last 2 of 12 DINOv2 backbone blocks at a lower LR, alongside neck+head",
+  "model_id": "depth-anything/Depth-Anything-V2-Small-hf",
+  "epochs": 16,
+  "batch_size": 4,
+  "lr_head": 5e-5,
+  "lr_backbone": 5e-6,
+  "unfreeze_last_n_backbone_blocks": 2,
+  "loss": "scale+shift-invariant L1 (closed-form OLS per-sample)",
+  "target_size": 518,
+  "seed": 42,
+  "train_patches": 513,
+  "val_patches": 42,
+  "frozen_params": 18506112,
+  "trainable_params": 6278977,
+  "best_val_ssi_l1_m": 1.0001,
+  "wall_clock_seconds_approx": 440,
+  "checkpoint": "checkpoints/da2_small_finetuned_iter2_partial_unfreeze.pt",
+  "note": "Reported as FINAL headline result -- marginal improvement over iteration 1, diminishing returns, no further iteration attempted (Section 35 stop condition)."
+}

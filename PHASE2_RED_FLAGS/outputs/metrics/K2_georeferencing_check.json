@@ -1,0 +1,39 @@
+{
+  "area": 26,
+  "source_pixel_size": [
+    0.09,
+    -0.09
+  ],
+  "source_origin": [
+    496794.825,
+    5419752.255
+  ],
+  "reopened_pixel_scale_tag": [
+    0.09,
+    0.09,
+    0.0
+  ],
+  "reopened_tiepoint_tag": [
+    0.0,
+    0.0,
+    0.0,
+    496794.825,
+    5419752.255,
+    0.0
+  ],
+  "reopened_shape": [
+    1783,
+    2995
+  ],
+  "source_shape": [
+    1783,
+    2995
+  ],
+  "checks": {
+    "pixel_size_preserved": true,
+    "origin_preserved": true,
+    "shape_preserved": true,
+    "epsg_geokey_preserved": true
+  },
+  "all_pass": true
+}

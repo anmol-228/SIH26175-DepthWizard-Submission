@@ -1,0 +1,88 @@
+{
+  "_fixture_meta": {
+    "SUPERSEDED": "SUPERSEDED 2026-08-29 by fixtures/calibration_output_v0_metric.json (metric branch) and fixtures/calibration_output_relative_v0.json (relative branch), under DW-S1-02 / issue #5. Everything below describes the PRE-WIRING state and is retained only as a historical record of what the boundary looked like before the producer was connected. The two statements that are now out of date: (1) component_1's calibrated array IS written to disk now, by geoio.save_geotiff() from both scripts/07_calibrate_and_eval.py and PHASE2_RED_FLAGS/scripts/K1_tiling_stitch.py; (2) component_2's exporter IS wired to it. Do not build against this file.",
+    "boundary": "CALIBRATION -> PIPELINE/VIEWER (handbook Part X)",
+    "version_status": "v0 / EXPERIMENTAL -- NOT frozen",
+    "why_not_v1": "The handbook's Part X describes this boundary as a single clean handoff: 'calibrated metric depth map -> GeoTIFF (metric branch) or a plain height array (relative branch)'. Reading the actual code shows this is NOT one function or one file format today -- it is two disconnected pieces plus one unimplemented branch. See component_1, component_2, and relative_branch_plain_height_array below. Freezing a v1 fixture for a boundary that doesn't exist as a single callable step yet would misrepresent the code to Ashmita/Aishee. This file documents what genuinely exists right now so they know exactly what they can and cannot build against.",
+    "verified_against_code_on": "2026-08-26",
+    "verified_by": "AI project agent (code-reading check; not independently human-verified)",
+    "files_read_to_verify": [
+      "scripts/07_calibrate_and_eval.py",
+      "src/metrics.py (fit_scale_shift)",
+      "src/geoio.py",
+      "PHASE2_RED_FLAGS/scripts/K2_georeferencing_export.py",
+      "outputs/metrics/finetuned_calibration_report_iter2_partial_unfreeze.json",
+      "PHASE2_RED_FLAGS/outputs/metrics/K2_georeferencing_check.json"
+    ],
+    "CRS_ERRATUM": "The EPSG:32633 recorded in component_2 below is wrong (issue #14). Coordinates are consistent with UTM 32N geometry; authority unproven; current exports write 32767 user-defined. Left as recorded - this file is a historical snapshot. Metadata assignment only; no coordinate was transformed."
+  },
+  "component_1_calibration_script_in_memory_output": {
+    "producing_script": "scripts/07_calibrate_and_eval.py",
+    "producing_call": "a, b = fit_scale_shift(pred, gt)  # src/metrics.py, closed-form OLS on gt ~= a*pred + b\np_cal = a * p + b",
+    "persisted_to_disk": false,
+    "note_IMPORTANT": "The calibrated array itself (p_cal / the actual metric height map) is NEVER written to a file anywhere in this script. It exists only transiently in memory while all_metrics(p_cal, g) computes RMSE/MAE/corr etc. Only the resulting METRICS REPORT json is persisted (outputs/metrics/finetuned_calibration_report_iter2_partial_unfreeze.json) -- that file contains error statistics and the (a, b) parameters, not the raster.",
+    "array_shape_dtype": "same H x W as the source patch/tile (e.g. 512x512 per patch, or a full concatenated tile such as area 1's 3,932,160 px); numpy float64 after np.asarray(..., dtype=np.float64).ravel() inside all_metrics()",
+    "units": "metres (real DSM units, after the scale/shift fit against ground-truth Vaihingen DSM pixels)",
+    "example_scale_shift_params_from_a_real_run": {
+      "source_file": "outputs/metrics/finetuned_calibration_report_iter2_partial_unfreeze.json",
+      "calibration_type": "per_tile_full_oracle (dense per-tile ground truth -- non-deployable ceiling, not a field-deployable calibration)",
+      "area": "1",
+      "a": 4.2586481419496955,
+      "b": 274.3487673590467,
+      "n_px": 3932160,
+      "resulting_rmse_m": 4.181305737955988
+    },
+    "example_sparse_deployable_like_params": {
+      "source_file": "outputs/metrics/finetuned_calibration_report_iter2_partial_unfreeze.json",
+      "calibration_type": "sparse_stress_test, N=10 points/tile (RANSACRegressor fit) -- more deployment-like, still samples the test tile's own DSM",
+      "note": "exact per-tile a/b for N=10 not reproduced verbatim here; see the source file's sparse_stress_test.\"10\" key for the full set"
+    },
+    "metadata_carried_at_this_stage": "NONE -- no CRS, no geotransform, no NoData value, no confidence/uncertainty field travels with the calibrated array in this script. It is a bare NumPy array plus two Python floats (a, b)."
+  },
+  "component_2_geotiff_export_mechanism": {
+    "producing_script": "PHASE2_RED_FLAGS/scripts/K2_georeferencing_export.py",
+    "IMPORTANT_CAVEAT": "This script is NOT wired to component_1's output. It proves GeoTIFF-with-embedded-GeoKeys export/reopen MECHANICS work, using the Vaihingen GROUND-TRUTH DSM array (data/raw/Vaihingen/dsm/dsm_09cm_matching_area26.tif) as the input array -- not a model-predicted-and-calibrated array. As of this reading, no code path in the repo takes calibration's p_cal array and calls this exporter. A consumer should treat 'calibrated array -> GeoTIFF' as a mechanically-proven but NOT yet integrated pipeline step.",
+    "format": "GeoTIFF, written with tifffile.imwrite + hand-constructed extratags (not GDAL/rasterio -- see src/geoio.py's module docstring for why)",
+    "embedded_tags": {
+      "ModelPixelScaleTag": "33550, type d, 3 values (pixel_size_x, abs(pixel_size_y), 0.0)",
+      "ModelTiepointTag": "33922, type d, 6 values (0,0,0, origin_x, origin_y, 0)",
+      "GeoKeyDirectoryTag": "34735, type H, minimal projected-CRS declaration: GTModelTypeGeoKey=1 (projected), GTRasterTypeGeoKey=1 (PixelIsArea), ProjectedCSTypeGeoKey=<EPSG>, ProjLinearUnitsGeoKey=9001 (metre)"
+    },
+    "crs_used_in_the_verified_run": "EPSG:32633 (UTM zone 33N) -- matches Vaihingen's own recovered local coordinate system from its geoinfo archive. CAVEAT (per PHASE2_RED_FLAGS/02_DATASET_RESEARCH.md): Vaihingen's absolute real-world geolocation is NOT confirmed trustworthy -- this only proves the round-trip MECHANICS, not that any resulting real-world coordinate is correct.",
+    "dtype": "float32",
+    "nodata_handling": "NOT embedded as a GeoTIFF tag by this writer. src/geoio.py separately provides dsm_nodata_mask(dsm, nodata_value=-9999.0, tol=1.0) as a reader-side convention, but the K2 writer does not set any NoData tag on export.",
+    "real_verified_round_trip_result": {
+      "source_file": "PHASE2_RED_FLAGS/outputs/metrics/K2_georeferencing_check.json",
+      "area": 26,
+      "source_pixel_size_m": [
+        0.09,
+        -0.09
+      ],
+      "source_origin": [
+        496794.825,
+        5419752.255
+      ],
+      "source_shape_px": [
+        1783,
+        2995
+      ],
+      "reopened_shape_px": [
+        1783,
+        2995
+      ],
+      "checks_all_pass": true,
+      "checks": {
+        "pixel_size_preserved": true,
+        "origin_preserved": true,
+        "shape_preserved": true,
+        "epsg_geokey_preserved": true
+      }
+    }
+  },
+  "relative_branch_plain_height_array": {
+    "status": "NOT IMPLEMENTED as a distinct code path",
+    "handbook_claim_being_checked": "Part X: 'Output: GeoTIFF (metric branch) or a plain height array (relative branch, not yet built as a distinct path).'",
+    "code_finding": "Confirmed by inspection -- the handbook's own parenthetical is accurate. No script in scripts/ or PHASE2_RED_FLAGS/scripts/ produces a standalone, non-georeferenced 'plain height array' file as a distinct deliverable for a viewer to consume; every current export path (K2) assumes georeferenced Vaihingen input."
+  },
+  "what_a_consumer_should_do_today": "Ashmita/Aishee should NOT assume a single 'calibration output file' exists to build against yet. If FPS-harness or viewer work needs a concrete example array+GeoTIFF today, use component_2's real_verified_round_trip_result shape/CRS as the geometry contract, and treat the array's numeric content as a placeholder (e.g. use the ground-truth DSM or a synthetic ramp) until Nirmalya wires calibration's output directly into K2's exporter. That wiring work is the actual prerequisite for a genuine v1 freeze of this boundary."
+}

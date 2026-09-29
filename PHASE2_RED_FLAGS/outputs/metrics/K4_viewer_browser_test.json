@@ -1,0 +1,15 @@
+{
+  "environment_note": "Tested in the AI-agent sandboxed browser pane. document.visibilityState remained 'hidden' throughout (pane not compositing frames in this tool), which throttles requestAnimationFrame per browser spec -- so a true rendered FPS could NOT be measured here. This is a tooling limitation, not a finding about the mesh/scene itself. Load time, parse time, and GPU-buffer-upload success/failure ARE real, measured results (these don't depend on tab visibility).",
+  "renderer": "three.js 0.160.0 (unpkg CDN) + GLTFLoader + OrbitControls, WebGLRenderer",
+  "results": [
+    {"model": "small_area26.glb", "size_MB": 11.90, "triangles": 522242, "vertices": 262144, "load_time_s": 0.054, "console_errors": 0, "load_success": true},
+    {"model": "medium_area26.glb", "size_MB": 61.19, "triangles": 2667654, "vertices": 1336216, "load_time_s": 0.269, "console_errors": 0, "load_success": true},
+    {"model": "large_area26.glb", "size_MB": 242.75, "triangles": 10670616, "vertices": 5340085, "load_time_s": 0.627, "console_errors": 0, "load_success": true},
+    {"model": "large_LOD_area26.glb", "size_MB": 9.01, "triangles": 500000, "vertices": 250472, "load_time_s": 0.034, "console_errors": 0, "load_success": true, "decimation_source": "large_area26.glb", "decimation_time_s": 15.48, "decimation_method": "trimesh.simplify_quadric_decimation (fast_simplification backend)"}
+  ],
+  "caveats": [
+    "load_time_s measured over localhost (same machine) -- NOT representative of real download time over the internet for a judge-facing demo. 242.75MB over a typical demo-venue connection could take tens of seconds to minutes; this is the strongest practical argument for LOD, independent of the untested FPS question.",
+    "No crash or console error was observed for ANY variant including the un-decimated 10.67M-triangle mesh, at least through model load + GPU buffer upload -- but general WebGL/three.js practice puts a smooth-60fps budget at roughly 1-3M triangles on typical hardware, well below 10.67M, so real-time frame rate at that polycount should be assumed poor on typical hardware even though it wasn't directly measurable here.",
+    "LOD via quadric decimation is a demonstrated, working mitigation: 10.67M -> 500K triangles (21.4x reduction), 242.75MB -> 9.01MB (26.9x reduction), taking 15.5s -- fast enough to run as a one-time server-side preprocessing step, not a live-demo blocker."
+  ]
+}

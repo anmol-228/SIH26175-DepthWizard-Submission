@@ -1,0 +1,75 @@
+{
+  "area": 26,
+  "tile_shape": [
+    1783,
+    2995
+  ],
+  "window": 512,
+  "stride": 384,
+  "n_windows_blended": 32,
+  "n_windows_hard": 15,
+  "time_s_blended_pass": 4.955535650253296,
+  "peak_mem_MB": 135.738329,
+  "blended_metrics": {
+    "rmse": 4.746694180916267,
+    "mae": 3.886645166113157,
+    "corr": 0.7256787778691797,
+    "bias": 3.013003197624562e-13,
+    "median_abs_err": 3.407557663320631,
+    "abs_err_p50": 3.407557663320631,
+    "abs_err_p75": 5.191896587872307,
+    "abs_err_p90": 7.7795028642249635,
+    "abs_err_p95": 9.357010515090536,
+    "abs_err_p99": 12.418436793897099
+  },
+  "hard_paste_metrics": {
+    "rmse": 4.160807813888245,
+    "mae": 3.3973017179508673,
+    "corr": 0.739511713577182,
+    "bias": -3.469817026295156e-14,
+    "median_abs_err": 3.0388726081180266,
+    "abs_err_p50": 3.0388726081180266,
+    "abs_err_p75": 4.808096658286644,
+    "abs_err_p90": 6.5888559844390535,
+    "abs_err_p95": 7.780114537857951,
+    "abs_err_p99": 10.8505059958165
+  },
+  "seam_gradient_hard_paste": {
+    "boundary_mean": 0.6091454946373274,
+    "interior_mean": 0.10205307203436469,
+    "ratio": 5.9689089460453255
+  },
+  "seam_gradient_blended": {
+    "boundary_mean": 0.10231515276856969,
+    "interior_mean": 0.12302403693478478,
+    "ratio": 0.8316679838981962
+  },
+  "calibrated_dsm_export": {
+    "written": true,
+    "path": "PHASE2_RED_FLAGS/outputs/predictions/K1_calibrated_dsm_area26.tif",
+    "product": "metric_dsm",
+    "calibration": "per_scene_oracle_scale_shift",
+    "calibration_a": 4.268516861167635,
+    "calibration_b": 251.94917413116693,
+    "units": "metres",
+    "dtype": "float32",
+    "nodata": -9999.0,
+    "epsg": 32767,
+    "pixel_size": [
+      0.09,
+      -0.09
+    ],
+    "origin": [
+      496794.825,
+      5419752.255
+    ],
+    "shape": [
+      1783,
+      2995
+    ],
+    "n_valid_px": 4959527,
+    "n_nodata_px": 380558,
+    "tfw_source": "data/raw/Vaihingen/geoinfo_extracted/dsm_09cm_matching_area26.tfw",
+    "IMPORTANT": "Oracle-calibrated against this tile's own ground-truth DSM. This is a non-deployable upper bound, NOT a field accuracy figure."
+  }
+}

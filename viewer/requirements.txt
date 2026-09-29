@@ -1,0 +1,16 @@
+# Minimal dependencies for the DepthWizard viewer server startup + P0-A2
+# (reference-DSM comparison). This is deliberately NOT the full project
+# requirements.txt at the repo root -- that file covers the complete
+# A3/model runtime (torch, transformers, trimesh, etc.), which is only
+# needed inside the run_pipeline.py SUBPROCESS that /api/upload spawns,
+# not by the server process itself.
+#
+# B3 fix (2026-09-14): server.py previously imported geoio (numpy, tifffile)
+# at module load time with no error handling, so a genuinely clean
+# environment crashed with a raw ModuleNotFoundError before the server
+# could even start. viewer/server.py now checks for these BEFORE importing
+# geoio and prints an actionable message pointing here if missing.
+#
+# Supported Python versions: 3.12.x and 3.14.x (see viewer/README.md).
+numpy==2.4.6
+tifffile==2026.3.3

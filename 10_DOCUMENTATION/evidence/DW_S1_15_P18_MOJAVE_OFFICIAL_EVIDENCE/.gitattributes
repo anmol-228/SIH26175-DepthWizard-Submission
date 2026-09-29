@@ -1,0 +1,22 @@
+# Evidence files below must be stored byte-for-byte.
+# Do not apply Git text/EOL normalization to captured/raw evidence.
+
+ATTEMPT1_CLASSIFICATION.json -text
+ATTEMPT1_CLASSIFICATION.sha256.txt -text
+attempt1_run_metadata.json -text
+attempt1_stderr.txt -text
+attempt1_stdout.txt -text
+predeclaration_attempt1.json -text
+predeclaration_attempt2.json -text
+run_metadata_attempt2.json -text
+stderr_attempt2.txt -text
+stdout_attempt2.txt -text
+environment.txt -text
+pip_freeze.txt -text
+ORCHESTRATION_LOG.jsonl -text
+
+raw_output/*.json -text
+
+handoff_snapshot/*.json -text
+handoff_snapshot/*.txt -text
+handoff_snapshot/*.md -text

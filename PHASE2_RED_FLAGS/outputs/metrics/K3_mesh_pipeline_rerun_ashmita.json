@@ -1,0 +1,86 @@
+[
+  {
+    "name": "small",
+    "area": 26,
+    "downsample": 1,
+    "input_shape": [
+      512,
+      512
+    ],
+    "n_vertices": 262144,
+    "n_faces": 522242,
+    "gen_time_s": 0.07090568542480469,
+    "export_time_s": 0.4073200225830078,
+    "file_size_MB": 11.896016,
+    "path": "<USER_HOME>\\Workspace\\SIH'26 PROJECT\\SIH26175-DepthWizard\\PHASE2_RED_FLAGS\\outputs\\3d\\small_area26.glb",
+    "is_watertight": false,
+    "bounds": [
+      [
+        0.0,
+        -45.989999999999995,
+        0.0
+      ],
+      [
+        45.989999999999995,
+        -0.0,
+        44.318023681640625
+      ]
+    ]
+  },
+  {
+    "name": "medium",
+    "area": 26,
+    "downsample": 2,
+    "input_shape": [
+      1783,
+      2995
+    ],
+    "n_vertices": 1336216,
+    "n_faces": 2667654,
+    "gen_time_s": 0.4807116985321045,
+    "export_time_s": 1.5929813385009766,
+    "file_size_MB": 61.186048,
+    "path": "<USER_HOME>\\Workspace\\SIH'26 PROJECT\\SIH26175-DepthWizard\\PHASE2_RED_FLAGS\\outputs\\3d\\medium_area26.glb",
+    "is_watertight": false,
+    "bounds": [
+      [
+        0.0,
+        -160.38,
+        0.0
+      ],
+      [
+        269.46,
+        -0.0,
+        60.08740997314453
+      ]
+    ]
+  },
+  {
+    "name": "large",
+    "area": 26,
+    "downsample": 1,
+    "input_shape": [
+      1783,
+      2995
+    ],
+    "n_vertices": 5340085,
+    "n_faces": 10670616,
+    "gen_time_s": 1.4742307662963867,
+    "export_time_s": 8.03472375869751,
+    "file_size_MB": 242.74694,
+    "path": "<USER_HOME>\\Workspace\\SIH'26 PROJECT\\SIH26175-DepthWizard\\PHASE2_RED_FLAGS\\outputs\\3d\\large_area26.glb",
+    "is_watertight": false,
+    "bounds": [
+      [
+        0.0,
+        -160.38,
+        0.0
+      ],
+      [
+        269.46,
+        -0.0,
+        60.506996154785156
+      ]
+    ]
+  }
+]

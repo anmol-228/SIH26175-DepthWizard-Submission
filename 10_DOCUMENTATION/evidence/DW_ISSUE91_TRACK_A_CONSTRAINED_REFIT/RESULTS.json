@@ -1,0 +1,1446 @@
+{
+  "schema": "dw-fs-issue91-track-a-constrained-refit/v1",
+  "issue_number": 91,
+  "issue_url": "internal tracker item 91",
+  "contract_path": "docs/final_sprint/phase2/HILLY_ACCURACY_RESCUE_EXPERIMENT_CONTRACT.md",
+  "preregistration_timestamp_utc": "2026-09-23T15:51:11Z",
+  "run_start_utc": "2026-09-23T15:54:12.617379+00:00",
+  "run_end_utc": "2026-09-23T15:54:46.732796+00:00",
+  "git": {
+    "branch": "issue-91-hilly-rescue-sep23",
+    "head": "0c0b9c58836c7cfc336850e82ab5e436a90ce23f",
+    "tree_state": "dirty",
+    "status_lines": [
+      "?? PHASE2_RED_FLAGS/scripts/E_08_track_a_constrained_calibration_refit.py",
+      "?? tests/test_track_a_constrained_calibration.py"
+    ]
+  },
+  "experiment_script": {
+    "path": "PHASE2_RED_FLAGS/scripts/E_08_track_a_constrained_calibration_refit.py",
+    "sha256": "3da078b99446b108591cb491fbcd63eb30023d0e55ed8460ec5c6fa2d7c6d71c"
+  },
+  "checkpoint": {
+    "path": "checkpoints\\da2_small_finetuned_iter2_partial_unfreeze.pt",
+    "size_bytes": 99266768,
+    "sha256": "74ccde40cf703095ed2adb783394d0dd2692b3ffaaf3b8a9e534e27feeba78d8"
+  },
+  "device": "cuda",
+  "frozen_hyperparameters": {
+    "SEEDS": [
+      0,
+      1,
+      2,
+      3,
+      4
+    ],
+    "N_VALUES": [
+      100
+    ],
+    "SEED_BASE": {
+      "100": 7000
+    },
+    "HUBER_DELTA": 1.345,
+    "HUBER_MAX_ITER": 10,
+    "RANSAC_MAX_TRIALS": 1000,
+    "HOLDOUT_RADIUS": 1
+  },
+  "gate": {
+    "VALID_FIT_REQUIREMENT": 4,
+    "HILLY_ORACLE_RMSE_M": 11.5,
+    "HILLY_RMSE_MARGIN_MULTIPLIER": 2.0,
+    "CONTROL_RMSE_REGRESSION_LIMIT_M": 1.0
+  },
+  "input_identities": {
+    "mount_adams": {
+      "rgb": {
+        "path": "PHASE2_RED_FLAGS\\data\\hilly_terrain\\aoi\\rgb_1m.npy",
+        "size_bytes": 26400128,
+        "sha256": "5448a542c342c1a6997133d0b98209caeb702d72f1e2e2f306d54ebceca89399"
+      },
+      "elevation": {
+        "path": "PHASE2_RED_FLAGS\\data\\hilly_terrain\\aoi\\dem_1m.npy",
+        "size_bytes": 35200128,
+        "sha256": "25049aa7e7376d1f8d2bd143a85faf35e5906179a01df17d50769acbcab86a58"
+      }
+    },
+    "vaihingen_area6": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area6.tif",
+        "size_bytes": 14573364,
+        "sha256": "b4afd0906c979c25a162e84247f93ffe7ce62900ce9f3ac9a1234c7d3993476c"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area6.tif",
+        "size_bytes": 19321604,
+        "sha256": "7f1cb26fce4c8acd9a0fd156c58f97421b2df9b354ed45d4770bc9e95f084114"
+      }
+    },
+    "vaihingen_area8": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area8.tif",
+        "size_bytes": 14577072,
+        "sha256": "8ca3f6aa284ea032ca17a27e772d8a20cc1aee4a33559bc2cc05edc0c7ff8a4d"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area8.tif",
+        "size_bytes": 19318448,
+        "sha256": "9b5e575aaeb4a72387c6cdd54682a4db7d9a6618218558d5f2cef4587f5e96c3"
+      }
+    },
+    "vaihingen_area34": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area34.tif",
+        "size_bytes": 10721306,
+        "sha256": "ecc4d371c93ac279c0e5b98d91ecad13a46bd4d78cee492d1b94fb40d759d352"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area34.tif",
+        "size_bytes": 14203476,
+        "sha256": "88ab7fe0c76dac216dab5495def12c4e0c413ba8242312e2a42511d975ea6918"
+      }
+    },
+    "vaihingen_area38": {
+      "rgb": {
+        "path": "data\\raw\\Vaihingen\\top\\top_mosaic_09cm_area38.tif",
+        "size_bytes": 29404734,
+        "sha256": "f52714e5d5991a194ecd784359ded79459c00a07e89b5f6ceb9975dd039dfeb0"
+      },
+      "elevation": {
+        "path": "data\\raw\\Vaihingen\\dsm\\dsm_09cm_matching_area38.tif",
+        "size_bytes": 38941348,
+        "sha256": "581ae6cedc15997898c0a77764568f89679aad9af7cdd401b350f1d656978932"
+      }
+    }
+  },
+  "timings": {
+    "mount_adams_predict_blend_s": 2.842071056365967,
+    "vaihingen_area6_predict_blend_s": 1.1137354373931885,
+    "vaihingen_area8_predict_blend_s": 1.1859157085418701,
+    "vaihingen_area34_predict_blend_s": 0.891711950302124,
+    "vaihingen_area38_predict_blend_s": 2.2151355743408203
+  },
+  "runs": [
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "N": 100,
+      "seed": 0,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": -20.450120029814904,
+        "b": 1032.2023943046743,
+        "fit_valid": false,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 0,
+        "metrics": null
+      },
+      "candidate_constrained": {
+        "a": 4.677275915819281,
+        "b": 954.0877898660931,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 43,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.917983149933114,
+        "initial_ransac_b": 957.4188062046512,
+        "n_eval_px": 8799100,
+        "metrics": {
+          "rmse": 60.70265673959465,
+          "mae": 41.543669721630735,
+          "corr": -0.03057337410558271,
+          "bias": -9.474081608604221,
+          "median_abs_err": 30.013933109851678,
+          "abs_err_p50": 30.013933109851678,
+          "abs_err_p75": 47.12759317148681,
+          "abs_err_p90": 87.35938400934674,
+          "abs_err_p95": 125.48238625064349,
+          "abs_err_p99": 255.75069549413482
+        }
+      },
+      "runtime_s": 1.1793367862701416
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "N": 100,
+      "seed": 1,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": -15.584883407008164,
+        "b": 1003.3626026873073,
+        "fit_valid": false,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 0,
+        "metrics": null
+      },
+      "candidate_constrained": {
+        "a": 13.077283257159513,
+        "b": 923.7684876092013,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 53,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 13.1289300739287,
+        "initial_ransac_b": 923.9342185325713,
+        "n_eval_px": 8799100,
+        "metrics": {
+          "rmse": 62.253709354849114,
+          "mae": 41.17937807967318,
+          "corr": -0.030555710024935945,
+          "bias": -15.231697628313402,
+          "median_abs_err": 26.653075238987526,
+          "abs_err_p50": 26.653075238987526,
+          "abs_err_p75": 48.4921194228842,
+          "abs_err_p90": 92.21150915114657,
+          "abs_err_p95": 132.56592917050043,
+          "abs_err_p99": 263.12351134396977
+        }
+      },
+      "runtime_s": 1.1298084259033203
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "N": 100,
+      "seed": 2,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": -29.03297813885374,
+        "b": 1039.1990593521523,
+        "fit_valid": false,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 0,
+        "metrics": null
+      },
+      "candidate_constrained": {
+        "a": 15.1653327734285,
+        "b": 904.0629660053835,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 45,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 15.500409230844454,
+        "initial_ransac_b": 903.923489334545,
+        "n_eval_px": 8799100,
+        "metrics": {
+          "rmse": 67.01914221820759,
+          "mae": 42.23879913383645,
+          "corr": -0.030569442320492888,
+          "bias": -28.831090783430124,
+          "median_abs_err": 22.80368293677691,
+          "abs_err_p50": 22.80368293677691,
+          "abs_err_p75": 54.06134758354139,
+          "abs_err_p90": 105.57232620799013,
+          "abs_err_p95": 146.4766482865213,
+          "abs_err_p99": 277.08439240687414
+        }
+      },
+      "runtime_s": 0.9990193843841553
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "N": 100,
+      "seed": 3,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": -49.161924748713346,
+        "b": 1115.2313415152448,
+        "fit_valid": false,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 0,
+        "metrics": null
+      },
+      "candidate_constrained": {
+        "a": -7.797086956519183,
+        "b": 980.5409791832789,
+        "fit_valid": false,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 40,
+        "n_refine_iters": 1,
+        "refinement_rejected_sign_flip": true,
+        "initial_ransac_a": -7.797086956519183,
+        "initial_ransac_b": 980.5409791832789,
+        "n_eval_px": 0,
+        "metrics": null
+      },
+      "runtime_s": 0.50258469581604
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "N": 100,
+      "seed": 4,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": -23.54529668773364,
+        "b": 1026.095773614214,
+        "fit_valid": false,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 0,
+        "metrics": null
+      },
+      "candidate_constrained": {
+        "a": -2.4262059394988476,
+        "b": 962.1614906080958,
+        "fit_valid": false,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 41,
+        "n_refine_iters": 1,
+        "refinement_rejected_sign_flip": true,
+        "initial_ransac_a": -2.4262059394988476,
+        "initial_ransac_b": 962.1614906080958,
+        "n_eval_px": 0,
+        "metrics": null
+      },
+      "runtime_s": 0.4873368740081787
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "N": 100,
+      "seed": 0,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.436867506074921,
+        "b": 272.3176076084655,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 11.014475446311854,
+          "mae": 7.7584130612729005,
+          "corr": 0.5178843237927633,
+          "bias": -4.07409154128139,
+          "median_abs_err": 5.185206672041488,
+          "abs_err_p50": 5.185206672041488,
+          "abs_err_p75": 9.529302318384822,
+          "abs_err_p90": 19.23790377797288,
+          "abs_err_p95": 26.491993225749717,
+          "abs_err_p99": 35.340451466059896
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.40045590685001,
+        "b": 272.1888379331955,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 71,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.3465059509458257,
+        "initial_ransac_b": 272.41676349261047,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 11.09806201980245,
+          "mae": 7.784403407661077,
+          "corr": 0.5178843237927634,
+          "bias": -4.273615647938066,
+          "median_abs_err": 5.194657667976458,
+          "abs_err_p50": 5.194657667976458,
+          "abs_err_p75": 9.593581438835287,
+          "abs_err_p90": 19.44755016904766,
+          "abs_err_p95": 26.72061925010881,
+          "abs_err_p99": 35.583163938864644
+        }
+      },
+      "runtime_s": 1.0645205974578857
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "N": 100,
+      "seed": 1,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.6282180040645966,
+        "b": 271.6925038513596,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 11.069740900374606,
+          "mae": 7.769573426254462,
+          "corr": 0.5178714680440121,
+          "bias": -4.327392748951691,
+          "median_abs_err": 5.220613863462006,
+          "abs_err_p50": 5.220613863462006,
+          "abs_err_p75": 9.504932030941347,
+          "abs_err_p90": 19.45216046898313,
+          "abs_err_p95": 26.601183743107097,
+          "abs_err_p99": 35.357819657173756
+        }
+      },
+      "candidate_constrained": {
+        "a": 2.6508641600923637,
+        "b": 273.67775835115225,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 59,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 2.526485690673256,
+        "initial_ransac_b": 274.07200939964406,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 11.28569836151907,
+          "mae": 7.88521657159874,
+          "corr": 0.5178714680440133,
+          "bias": -4.241340656889256,
+          "median_abs_err": 4.944270864334555,
+          "abs_err_p50": 4.944270864334555,
+          "abs_err_p75": 9.959744984590714,
+          "abs_err_p90": 19.520549676554666,
+          "abs_err_p95": 27.294099499401376,
+          "abs_err_p99": 36.44120851613613
+        }
+      },
+      "runtime_s": 1.0225412845611572
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "N": 100,
+      "seed": 2,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 6.388732904971688,
+        "b": 270.584883406386,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 10.029004957769843,
+          "mae": 7.984829418584147,
+          "corr": 0.5178692948296864,
+          "bias": -0.07032584013851778,
+          "median_abs_err": 6.6707638599984875,
+          "abs_err_p50": 6.6707638599984875,
+          "abs_err_p75": 10.6075140792924,
+          "abs_err_p90": 15.940911492381849,
+          "abs_err_p95": 21.224411747671898,
+          "abs_err_p99": 27.872402851078217
+        }
+      },
+      "candidate_constrained": {
+        "a": 4.451778082465175,
+        "b": 272.93421985199876,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 60,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 4.553877215829816,
+        "initial_ransac_b": 272.88562980979134,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 10.154467355919653,
+          "mae": 7.718748033000879,
+          "corr": 0.5178692948296838,
+          "bias": -1.4848713878552537,
+          "median_abs_err": 6.077542435865439,
+          "abs_err_p50": 6.077542435865439,
+          "abs_err_p75": 9.490438265332727,
+          "abs_err_p90": 16.556845731796034,
+          "abs_err_p95": 23.04707471986426,
+          "abs_err_p99": 31.44288446569688
+        }
+      },
+      "runtime_s": 1.0400891304016113
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "N": 100,
+      "seed": 3,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 2.2832042102445698,
+        "b": 274.695580642823,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 11.295080433376603,
+          "mae": 7.919389567212113,
+          "corr": 0.517887799673932,
+          "bias": -3.937913481824155,
+          "median_abs_err": 5.023386916388745,
+          "abs_err_p50": 5.023386916388745,
+          "abs_err_p75": 10.056982080286701,
+          "abs_err_p90": 19.285903247725567,
+          "abs_err_p95": 27.27144360806486,
+          "abs_err_p99": 36.614488614304804
+        }
+      },
+      "candidate_constrained": {
+        "a": 2.1875161212910266,
+        "b": 274.68552173723305,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 58,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 2.2832042102445698,
+        "initial_ransac_b": 274.695580642823,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 11.39803838571764,
+          "mae": 7.962075504425026,
+          "corr": 0.5178877996739326,
+          "bias": -4.133911515002219,
+          "median_abs_err": 4.971830230901617,
+          "abs_err_p50": 4.971830230901617,
+          "abs_err_p75": 10.178185323791894,
+          "abs_err_p90": 19.489234535009782,
+          "abs_err_p95": 27.550053250631937,
+          "abs_err_p99": 36.937226645422776
+        }
+      },
+      "runtime_s": 1.017547845840454
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "N": 100,
+      "seed": 4,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 8.299315303573804,
+        "b": 268.9067371998793,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 10.63045684210371,
+          "mae": 8.692092294758186,
+          "corr": 0.5178554515370217,
+          "bias": 1.9641062784974754,
+          "median_abs_err": 7.245548296506172,
+          "abs_err_p50": 7.245548296506172,
+          "abs_err_p75": 12.540214597402496,
+          "abs_err_p90": 17.754835702563494,
+          "abs_err_p95": 21.07894757799935,
+          "abs_err_p99": 24.971647056225752
+        }
+      },
+      "candidate_constrained": {
+        "a": 4.403168553600221,
+        "b": 270.71816926152496,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 51,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 4.520963365262285,
+        "initial_ransac_b": 270.79084503021494,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 10.744408866909202,
+          "mae": 7.690660676606787,
+          "corr": 0.5178554515370225,
+          "bias": -3.795506730968929,
+          "median_abs_err": 5.453838392476996,
+          "abs_err_p50": 5.453838392476996,
+          "abs_err_p75": 9.333162551850478,
+          "abs_err_p90": 18.87571845157787,
+          "abs_err_p95": 25.40030360254031,
+          "abs_err_p99": 33.813172965817735
+        }
+      },
+      "runtime_s": 1.075608491897583
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "N": 100,
+      "seed": 0,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.969081357908692,
+        "b": 276.23001354050643,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.328610130276178,
+          "mae": 1.881771592742314,
+          "corr": 0.8736126370893011,
+          "bias": -0.06853357738982567,
+          "median_abs_err": 1.6066803559050982,
+          "abs_err_p50": 1.6066803559050982,
+          "abs_err_p75": 2.573806124356821,
+          "abs_err_p90": 3.725352613856547,
+          "abs_err_p95": 4.493944501433767,
+          "abs_err_p99": 6.201441328575614
+        }
+      },
+      "candidate_constrained": {
+        "a": 4.003646922758317,
+        "b": 276.119532789453,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 97,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.969081357908692,
+        "initial_ransac_b": 276.23001354050643,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.3337336392379546,
+          "mae": 1.8838776191380848,
+          "corr": 0.8736126370892948,
+          "bias": -0.12405986492229158,
+          "median_abs_err": 1.6013618784555774,
+          "abs_err_p50": 1.6013618784555774,
+          "abs_err_p75": 2.577025147834803,
+          "abs_err_p90": 3.7588250740322118,
+          "abs_err_p95": 4.504286836074407,
+          "abs_err_p99": 6.2223441434124425
+        }
+      },
+      "runtime_s": 0.5808689594268799
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "N": 100,
+      "seed": 1,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 4.0961512491770735,
+        "b": 276.25977755925913,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.346608471938801,
+          "mae": 1.9001247708320577,
+          "corr": 0.8736196237825514,
+          "bias": 0.1633081533108691,
+          "median_abs_err": 1.640098429394527,
+          "abs_err_p50": 1.640098429394527,
+          "abs_err_p75": 2.610485277589248,
+          "abs_err_p90": 3.694609128961963,
+          "abs_err_p95": 4.551004946503797,
+          "abs_err_p99": 6.23768576834009
+        }
+      },
+      "candidate_constrained": {
+        "a": 4.233614001764433,
+        "b": 276.1049653351246,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 88,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 4.209422966523334,
+        "initial_ransac_b": 276.1921322766618,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.375332632977571,
+          "mae": 1.9191873334142144,
+          "corr": 0.8736196237825509,
+          "bias": 0.2270391479291707,
+          "median_abs_err": 1.6409876035393154,
+          "abs_err_p50": 1.6409876035393154,
+          "abs_err_p75": 2.6400686906605983,
+          "abs_err_p90": 3.7495211221197797,
+          "abs_err_p95": 4.621930678264665,
+          "abs_err_p99": 6.347299931891389
+        }
+      },
+      "runtime_s": 1.061933994293213
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "N": 100,
+      "seed": 2,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.9189434553955476,
+        "b": 276.2166478591605,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.3301893473931004,
+          "mae": 1.8797130657574588,
+          "corr": 0.8736098232457992,
+          "bias": -0.16159220820180595,
+          "median_abs_err": 1.594755037113032,
+          "abs_err_p50": 1.594755037113032,
+          "abs_err_p75": 2.570601685057227,
+          "abs_err_p90": 3.7514820531222313,
+          "abs_err_p95": 4.47652498565358,
+          "abs_err_p99": 6.236014073103281
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.9338406295047164,
+        "b": 276.1261688885531,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 98,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.9189434553955476,
+        "initial_ransac_b": 276.2166478591605,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.3365348125885745,
+          "mae": 1.8821010477498177,
+          "corr": 0.8736098232457958,
+          "bias": -0.22838705299163892,
+          "median_abs_err": 1.5892749186812694,
+          "abs_err_p50": 1.5892749186812694,
+          "abs_err_p75": 2.5744860544940593,
+          "abs_err_p90": 3.785793019561402,
+          "abs_err_p95": 4.488862354919734,
+          "abs_err_p99": 6.266229160828932
+        }
+      },
+      "runtime_s": 0.5929126739501953
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "N": 100,
+      "seed": 3,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.7860452332119747,
+        "b": 276.5817722318591,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.322788099006878,
+          "mae": 1.8803544240328929,
+          "corr": 0.8736182179619021,
+          "bias": -0.007732742971932687,
+          "median_abs_err": 1.6396526938251554,
+          "abs_err_p50": 1.6396526938251554,
+          "abs_err_p75": 2.579987586654312,
+          "abs_err_p90": 3.6655340837911017,
+          "abs_err_p95": 4.446529574995127,
+          "abs_err_p99": 6.181559310075427
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.823278390672976,
+        "b": 276.46802757639506,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 98,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.7860452332119747,
+        "initial_ransac_b": 276.5817722318591,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.3232093542807637,
+          "mae": 1.878353007053309,
+          "corr": 0.8736182179619021,
+          "bias": -0.062280734104777254,
+          "median_abs_err": 1.617577318082624,
+          "abs_err_p50": 1.617577318082624,
+          "abs_err_p75": 2.5712236955968706,
+          "abs_err_p90": 3.693580492375543,
+          "abs_err_p95": 4.452928605289286,
+          "abs_err_p99": 6.20113121567087
+        }
+      },
+      "runtime_s": 0.5966160297393799
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "N": 100,
+      "seed": 4,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.940327360612796,
+        "b": 276.37891729410404,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.3259439588390856,
+          "mae": 1.8833125631146816,
+          "corr": 0.8736198161428824,
+          "bias": 0.034695522040894,
+          "median_abs_err": 1.627503162756227,
+          "abs_err_p50": 1.627503162756227,
+          "abs_err_p75": 2.5805607532153374,
+          "abs_err_p90": 3.6800344324452112,
+          "abs_err_p95": 4.492107856108406,
+          "abs_err_p99": 6.168681132492952
+        }
+      },
+      "candidate_constrained": {
+        "a": 4.038554395968245,
+        "b": 276.200953311834,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 95,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.940327360612796,
+        "initial_ransac_b": 276.37891729410404,
+        "n_eval_px": 4824159,
+        "metrics": {
+          "rmse": 2.3339204847915007,
+          "mae": 1.887927821570036,
+          "corr": 0.8736198161428869,
+          "bias": 0.012900380191176423,
+          "median_abs_err": 1.618671031258259,
+          "abs_err_p50": 1.618671031258259,
+          "abs_err_p75": 2.5844939293573077,
+          "abs_err_p90": 3.7171043908715324,
+          "abs_err_p95": 4.514352081251779,
+          "abs_err_p99": 6.203387940117895
+        }
+      },
+      "runtime_s": 0.6187183856964111
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "N": 100,
+      "seed": 0,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.233395653341978,
+        "b": 259.97085805164926,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.9782528646906166,
+          "mae": 1.3649308665966267,
+          "corr": 0.9025826607867177,
+          "bias": -0.4501368734900833,
+          "median_abs_err": 0.9379419087868257,
+          "abs_err_p50": 0.9379419087868257,
+          "abs_err_p75": 1.7521702050129448,
+          "abs_err_p90": 2.9910741448910074,
+          "abs_err_p95": 4.504496625976349,
+          "abs_err_p99": 7.21059291583892
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.2119910939956138,
+        "b": 259.9317585258147,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 94,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.233395653341978,
+        "initial_ransac_b": 259.97085805164926,
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 2.0019480883756846,
+          "mae": 1.3735372915165858,
+          "corr": 0.9025826607867159,
+          "bias": -0.5242204941886147,
+          "median_abs_err": 0.944369647843672,
+          "abs_err_p50": 0.944369647843672,
+          "abs_err_p75": 1.7487706739600384,
+          "abs_err_p90": 3.0390195328858116,
+          "abs_err_p95": 4.585133014605755,
+          "abs_err_p99": 7.311157509344385
+        }
+      },
+      "runtime_s": 0.5719287395477295
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "N": 100,
+      "seed": 1,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.3177859575260173,
+        "b": 259.97238370719856,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.931282917009346,
+          "mae": 1.3507562296608395,
+          "corr": 0.9025904791209696,
+          "bias": -0.3106269924792995,
+          "median_abs_err": 0.9368354528918417,
+          "abs_err_p50": 0.9368354528918417,
+          "abs_err_p75": 1.7549156222720228,
+          "abs_err_p90": 2.912040908180485,
+          "abs_err_p95": 4.324434913377482,
+          "abs_err_p99": 6.968955157554919
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.1426877324236115,
+        "b": 260.0647024536344,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 87,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.0864329490396925,
+        "initial_ransac_b": 260.11385136627075,
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 2.016402849662677,
+          "mae": 1.3823118058809196,
+          "corr": 0.9025904791209675,
+          "bias": -0.5045065566669221,
+          "median_abs_err": 0.9413299221094462,
+          "abs_err_p50": 0.9413299221094462,
+          "abs_err_p75": 1.7540577726813638,
+          "abs_err_p90": 3.0624921389382282,
+          "abs_err_p95": 4.620393320632675,
+          "abs_err_p99": 7.378309122070845
+        }
+      },
+      "runtime_s": 0.9498069286346436
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "N": 100,
+      "seed": 2,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.3977022748053365,
+        "b": 259.81160348709744,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.9214475862180547,
+          "mae": 1.3448460751235407,
+          "corr": 0.9025763693122318,
+          "bias": -0.340797408206722,
+          "median_abs_err": 0.9438579540413343,
+          "abs_err_p50": 0.9438579540413343,
+          "abs_err_p75": 1.7406352711747672,
+          "abs_err_p90": 2.9113968636345704,
+          "abs_err_p95": 4.294673821051897,
+          "abs_err_p99": 6.902784300331491
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.355445021632722,
+        "b": 259.92258707208146,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 80,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.347388544815173,
+        "initial_ransac_b": 259.9922584470488,
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.9220070110670835,
+          "mae": 1.3471104691994233,
+          "corr": 0.902576369312231,
+          "bias": -0.2988843731134426,
+          "median_abs_err": 0.940006489341954,
+          "abs_err_p50": 0.940006489341954,
+          "abs_err_p75": 1.7507826114720189,
+          "abs_err_p90": 2.905814228267719,
+          "abs_err_p95": 4.28833285999367,
+          "abs_err_p99": 6.912163171138268
+        }
+      },
+      "runtime_s": 0.9452066421508789
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "N": 100,
+      "seed": 3,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.3147892092569555,
+        "b": 259.8584144895979,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.954604227692985,
+          "mae": 1.3549605252596462,
+          "corr": 0.9025887114885663,
+          "bias": -0.4295160964912928,
+          "median_abs_err": 0.9391755576396577,
+          "abs_err_p50": 0.9391755576396577,
+          "abs_err_p75": 1.746781738664282,
+          "abs_err_p90": 2.950473864475686,
+          "abs_err_p95": 4.428252139936118,
+          "abs_err_p99": 7.089940043422966
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.3025593023893567,
+        "b": 259.8534710953036,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 86,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.3147892092569555,
+        "initial_ransac_b": 259.8584144895979,
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.9628498054061783,
+          "mae": 1.3577982217205407,
+          "corr": 0.9025887114885583,
+          "bias": -0.4544490232021748,
+          "median_abs_err": 0.9404824870006223,
+          "abs_err_p50": 0.9404824870006223,
+          "abs_err_p75": 1.7471717055402962,
+          "abs_err_p90": 2.966774166006673,
+          "abs_err_p95": 4.458512282197957,
+          "abs_err_p99": 7.129533824458031
+        }
+      },
+      "runtime_s": 0.9810924530029297
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "N": 100,
+      "seed": 4,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.893541397607141,
+        "b": 259.2777451949875,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.881963023511029,
+          "mae": 1.3718757841908829,
+          "corr": 0.9025855567356513,
+          "bias": -0.06414645058415244,
+          "median_abs_err": 1.0175450915897954,
+          "abs_err_p50": 1.0175450915897954,
+          "abs_err_p75": 1.8696746927023753,
+          "abs_err_p90": 3.085501653096782,
+          "abs_err_p95": 3.935234947978347,
+          "abs_err_p99": 6.0924117261465085
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.7463912995574336,
+        "b": 259.4721347610198,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 91,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.75773129960654,
+        "initial_ransac_b": 259.5105379857798,
+        "n_eval_px": 3545440,
+        "metrics": {
+          "rmse": 1.8716242336884241,
+          "mae": 1.3506433379802247,
+          "corr": 0.9025855567356506,
+          "bias": -0.11027354968106094,
+          "median_abs_err": 0.9920743135649275,
+          "abs_err_p50": 0.9920743135649275,
+          "abs_err_p75": 1.8041152078795193,
+          "abs_err_p90": 3.0081108250420985,
+          "abs_err_p95": 3.9567841767466074,
+          "abs_err_p99": 6.280361649504593
+        }
+      },
+      "runtime_s": 0.7695202827453613
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "N": 100,
+      "seed": 0,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.989432475946339,
+        "b": 263.1194325372799,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.864775872017802,
+          "mae": 2.1690370241699526,
+          "corr": 0.7629096253705101,
+          "bias": 0.19773309621064966,
+          "median_abs_err": 1.6224885272950758,
+          "abs_err_p50": 1.6224885272950758,
+          "abs_err_p75": 3.2491924127452734,
+          "abs_err_p90": 5.013446990258563,
+          "abs_err_p95": 6.028061535856005,
+          "abs_err_p99": 7.5637144139607475
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.9231987247355926,
+        "b": 263.28854310549207,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 77,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.962529911207854,
+        "initial_ransac_b": 263.2112776168642,
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.852184086510846,
+          "mae": 2.1690209024929374,
+          "corr": 0.7629096253705075,
+          "bias": 0.2609656144683033,
+          "median_abs_err": 1.6398038741595258,
+          "abs_err_p50": 1.6398038741595258,
+          "abs_err_p75": 3.2365003629542883,
+          "abs_err_p90": 4.978901871655483,
+          "abs_err_p95": 5.96394623737874,
+          "abs_err_p99": 7.5480797476646
+        }
+      },
+      "runtime_s": 1.6597750186920166
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "N": 100,
+      "seed": 1,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 4.299324749022715,
+        "b": 262.4175270350491,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.9596961920755516,
+          "mae": 2.2239967906351144,
+          "corr": 0.762903191904566,
+          "bias": -0.008848659653909654,
+          "median_abs_err": 1.622999575554843,
+          "abs_err_p50": 1.622999575554843,
+          "abs_err_p75": 3.2792341413249204,
+          "abs_err_p90": 5.223859217928439,
+          "abs_err_p95": 6.341378259089936,
+          "abs_err_p99": 7.673177606430407
+        }
+      },
+      "candidate_constrained": {
+        "a": 4.412647460399497,
+        "b": 262.41306640576414,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 75,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 4.4319558885737695,
+        "initial_ransac_b": 262.3762429418559,
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 3.008840982944865,
+          "mae": 2.2679636788932953,
+          "corr": 0.7629031919045609,
+          "bias": 0.16784296701766746,
+          "median_abs_err": 1.668895527001382,
+          "abs_err_p50": 1.668895527001382,
+          "abs_err_p75": 3.337711443363858,
+          "abs_err_p90": 5.321937159599019,
+          "abs_err_p95": 6.390959394938693,
+          "abs_err_p99": 7.744991443886323
+        }
+      },
+      "runtime_s": 1.6387581825256348
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "N": 100,
+      "seed": 2,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.3570354637147513,
+        "b": 263.4026592609317,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.80182537186965,
+          "mae": 2.1173436801922887,
+          "corr": 0.762906680392828,
+          "bias": -0.5300377867880279,
+          "median_abs_err": 1.5988984477823749,
+          "abs_err_p50": 1.5988984477823749,
+          "abs_err_p75": 3.111000428432078,
+          "abs_err_p90": 4.770953754944906,
+          "abs_err_p95": 5.941285932746378,
+          "abs_err_p99": 7.632304043403231
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.7625473876463973,
+        "b": 262.93868948331186,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 66,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.8300409065939465,
+        "initial_ransac_b": 262.82937475084117,
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.824708354604235,
+          "mae": 2.1144079235306585,
+          "corr": 0.7629066803928236,
+          "bias": -0.3457729165378745,
+          "median_abs_err": 1.545187362538229,
+          "abs_err_p50": 1.545187362538229,
+          "abs_err_p75": 3.125761947143914,
+          "abs_err_p90": 4.881472803839732,
+          "abs_err_p95": 6.090505540497186,
+          "abs_err_p99": 7.500633493072411
+        }
+      },
+      "runtime_s": 1.6693956851959229
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "N": 100,
+      "seed": 3,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.369205164486149,
+        "b": 263.5646633910416,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.7738962988740825,
+          "mae": 2.102590107097131,
+          "corr": 0.7629072409563061,
+          "bias": -0.34859717508892807,
+          "median_abs_err": 1.6041148919712214,
+          "abs_err_p50": 1.6041148919712214,
+          "abs_err_p75": 3.1113125802313277,
+          "abs_err_p90": 4.74312633100589,
+          "abs_err_p95": 5.832331138979113,
+          "abs_err_p99": 7.496967043915168
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.4018492359548085,
+        "b": 263.40008091127,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 76,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.369205164486149,
+        "initial_ransac_b": 263.5646633910416,
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.7923546180305525,
+          "mae": 2.1086093461057254,
+          "corr": 0.7629072409563087,
+          "bias": -0.4609968117744903,
+          "median_abs_err": 1.590421834358608,
+          "abs_err_p50": 1.590421834358608,
+          "abs_err_p75": 3.1159552359106613,
+          "abs_err_p90": 4.767736576099536,
+          "abs_err_p95": 5.920649577997232,
+          "abs_err_p99": 7.562706918822064
+        }
+      },
+      "runtime_s": 1.6404592990875244
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "N": 100,
+      "seed": 4,
+      "reference_provenance": "SIMULATED CALIBRATION CONTROLS SAMPLED FROM EVALUATION DSM",
+      "n_reference_points": 100,
+      "baseline_unconstrained": {
+        "a": 3.8503285492243795,
+        "b": 262.7998182301354,
+        "fit_valid": true,
+        "method": "ransac_unconstrained_baseline",
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.8434184770765043,
+          "mae": 2.12645184361776,
+          "corr": 0.762903597683191,
+          "bias": -0.3443305583631642,
+          "median_abs_err": 1.5450508177986535,
+          "abs_err_p50": 1.5450508177986535,
+          "abs_err_p75": 3.1435243702566424,
+          "abs_err_p90": 4.92540482957944,
+          "abs_err_p95": 6.153025907736853,
+          "abs_err_p99": 7.543889953951136
+        }
+      },
+      "candidate_constrained": {
+        "a": 3.7454787526762896,
+        "b": 263.02037406459493,
+        "fit_valid": true,
+        "method": "ransac_positive_scale_constrained+huber_irls_refine",
+        "n_inliers": 80,
+        "n_refine_iters": 10,
+        "refinement_rejected_sign_flip": false,
+        "initial_ransac_a": 3.739175687567826,
+        "initial_ransac_b": 263.1032313474678,
+        "n_eval_px": 9729900,
+        "metrics": {
+          "rmse": 2.8152075349883776,
+          "mae": 2.1093903467578277,
+          "corr": 0.7629035976831892,
+          "bias": -0.2913820730177974,
+          "median_abs_err": 1.547408229189557,
+          "abs_err_p50": 1.547408229189557,
+          "abs_err_p75": 3.135425412289109,
+          "abs_err_p90": 4.8684168586478505,
+          "abs_err_p95": 6.053231682616222,
+          "abs_err_p99": 7.482015439694195
+        }
+      },
+      "runtime_s": 1.6968135833740234
+    }
+  ],
+  "decision": {
+    "gate_source": "docs/final_sprint/phase2/HILLY_ACCURACY_RESCUE_EXPERIMENT_CONTRACT.md",
+    "valid_fit_requirement": 4,
+    "hilly_oracle_rmse_reference_m": 11.5,
+    "hilly_rmse_margin_multiplier": 2.0,
+    "hilly_rmse_limit_m": 23.0,
+    "control_rmse_regression_limit_m": 1.0,
+    "hilly_table": [
+      {
+        "seed": 0,
+        "fit_valid": true,
+        "rmse": 60.70265673959465,
+        "a": 4.677275915819281,
+        "b": 954.0877898660931,
+        "baseline_fit_valid": false,
+        "baseline_rmse": null
+      },
+      {
+        "seed": 1,
+        "fit_valid": true,
+        "rmse": 62.253709354849114,
+        "a": 13.077283257159513,
+        "b": 923.7684876092013,
+        "baseline_fit_valid": false,
+        "baseline_rmse": null
+      },
+      {
+        "seed": 2,
+        "fit_valid": true,
+        "rmse": 67.01914221820759,
+        "a": 15.1653327734285,
+        "b": 904.0629660053835,
+        "baseline_fit_valid": false,
+        "baseline_rmse": null
+      },
+      {
+        "seed": 3,
+        "fit_valid": false,
+        "rmse": null,
+        "a": -7.797086956519183,
+        "b": 980.5409791832789,
+        "baseline_fit_valid": false,
+        "baseline_rmse": null
+      },
+      {
+        "seed": 4,
+        "fit_valid": false,
+        "rmse": null,
+        "a": -2.4262059394988476,
+        "b": 962.1614906080958,
+        "baseline_fit_valid": false,
+        "baseline_rmse": null
+      }
+    ],
+    "valid_seed_count": 3,
+    "max_valid_seed_rmse_m": 67.01914221820759,
+    "hilly_rmse_within_margin": false,
+    "control_table": [
+      {
+        "scene": "vaihingen_area6",
+        "median_baseline_rmse": 11.014475446311854,
+        "median_candidate_rmse": 11.09806201980245,
+        "rmse_delta": 0.08358657349059584,
+        "baseline_valid_count": 5,
+        "candidate_valid_count": 5,
+        "regressed": false
+      },
+      {
+        "scene": "vaihingen_area8",
+        "median_baseline_rmse": 2.328610130276178,
+        "median_candidate_rmse": 2.3339204847915007,
+        "rmse_delta": 0.0053103545153225795,
+        "baseline_valid_count": 5,
+        "candidate_valid_count": 5,
+        "regressed": false
+      },
+      {
+        "scene": "vaihingen_area34",
+        "median_baseline_rmse": 1.931282917009346,
+        "median_candidate_rmse": 1.9628498054061783,
+        "rmse_delta": 0.031566888396832304,
+        "baseline_valid_count": 5,
+        "candidate_valid_count": 5,
+        "regressed": false
+      },
+      {
+        "scene": "vaihingen_area38",
+        "median_baseline_rmse": 2.8434184770765043,
+        "median_candidate_rmse": 2.824708354604235,
+        "rmse_delta": -0.01871012247226922,
+        "baseline_valid_count": 5,
+        "candidate_valid_count": 5,
+        "regressed": false
+      }
+    ],
+    "control_regressed": false,
+    "STOPPING_RULE_PASS": false,
+    "CLASSIFICATION": "FAIL"
+  }
+}

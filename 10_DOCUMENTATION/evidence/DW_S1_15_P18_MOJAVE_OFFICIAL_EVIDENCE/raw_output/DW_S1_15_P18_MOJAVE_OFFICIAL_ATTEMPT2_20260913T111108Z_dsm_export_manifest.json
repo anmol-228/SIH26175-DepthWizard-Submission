@@ -1,0 +1,7 @@
+{
+  "schema": "calibration_output/v0-metric",
+  "rasters": [],
+  "skipped": [
+    "no geoinfo_extracted/dsm_09cm_matching_areamojave_sparse_desert_p18.tfw; refusing to write a metric GeoTIFF with a guessed georeference (see 02_DATA_AUDIT.md)"
+  ]
+}

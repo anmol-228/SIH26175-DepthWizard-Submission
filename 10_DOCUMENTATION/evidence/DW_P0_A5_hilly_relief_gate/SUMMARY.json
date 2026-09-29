@@ -1,0 +1,28 @@
+{
+  "base_sha": "24d0e24d5e46243c35aa463f9e4bf95deb88c42b",
+  "branch": "feature/dw-p0-a5-hilly-relief-refusal",
+  "cases": {
+    "non_trigger_flat": {
+      "branch": "metric",
+      "exit_code": 0,
+      "gate_pass": true,
+      "gate_reason": null,
+      "metric_artifacts": [
+        "non_trigger_flat_metric.glb",
+        "non_trigger_flat_metric.tif"
+      ],
+      "reference_relief_m": 25.92,
+      "reference_relief_status": "within provisional floor"
+    },
+    "trigger_hilly_relief": {
+      "branch": "relative",
+      "exit_code": 0,
+      "gate_pass": false,
+      "gate_reason": "reference points span 200.0 m of elevation relief (provisional hilly-risk floor 87.5 m); one whole-scene scale/shift fit over that much relief is the failure mode measured at 60-70 m RMSE on Mount Adams (see #32, HILLY_RELIEF_EVIDENCE) - declining rather than writing an unsupported confident metric DSM",
+      "metric_artifacts": [],
+      "reference_relief_m": 200.0,
+      "reference_relief_status": "relief-risk gate triggered - see reason"
+    }
+  },
+  "issue": "#32 (DW-P0-A5, Phase-2 activation 2026-09-11)"
+}

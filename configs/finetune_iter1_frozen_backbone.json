@@ -1,0 +1,19 @@
+{
+  "iteration": 1,
+  "description": "Loop-A baseline fine-tune: DINOv2 backbone fully frozen, train neck+head only",
+  "model_id": "depth-anything/Depth-Anything-V2-Small-hf",
+  "epochs": 8,
+  "batch_size": 4,
+  "lr_head": 5e-5,
+  "unfreeze_last_n_backbone_blocks": 0,
+  "loss": "scale+shift-invariant L1 (closed-form OLS per-sample)",
+  "target_size": 518,
+  "seed": 42,
+  "train_patches": 513,
+  "val_patches": 42,
+  "frozen_params": 22056576,
+  "trainable_params": 2728513,
+  "best_val_ssi_l1_m": 1.1041,
+  "wall_clock_seconds_approx": 205,
+  "checkpoint": "checkpoints/da2_small_finetuned_iter1_frozen_backbone.pt"
+}

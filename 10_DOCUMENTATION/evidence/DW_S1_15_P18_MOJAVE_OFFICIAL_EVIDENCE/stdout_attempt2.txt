@@ -1,0 +1,15 @@
+Loaded fine-tuned checkpoint: <worktree>
+Test tiles: ['mojave_sparse_desert_p18']
+  [full oracle] area mojave_sparse_desert_p18: RMSE=39.046 MAE=28.916 corr=0.538
+
+[GLOBAL, fine-tuned + full per-tile oracle calibration] {'rmse': 39.04556894042472, 'mae': 28.91557973817301, 'corr': 0.5375283654980433, 'bias': -2.522409583131472e-06, 'median_abs_err': 24.49505615234375, 'abs_err_p50': 24.49505615234375, 'abs_err_p75': 36.94842529296875, 'abs_err_p90': 53.736419677734375, 'abs_err_p95': 68.81924438476562, 'abs_err_p99': 139.44818420410155}
+[sparse calib, N=200 pts/tile] GLOBAL RMSE=40.954 MAE=28.985 corr=0.538
+[sparse calib, N=50 pts/tile] GLOBAL RMSE=40.039 MAE=28.727 corr=0.538
+[sparse calib, N=10 pts/tile] GLOBAL RMSE=39.356 MAE=29.605 corr=0.538
+[sparse calib, N=5 pts/tile] GLOBAL RMSE=88.659 MAE=70.950 corr=-0.538
+[sparse calib, N=1 pts/tile] GLOBAL RMSE=70.139 MAE=53.486 corr=0.538
+
+Saved -> <worktree>
+Wrote 0 calibrated DSM raster(s) -> <worktree>
+  skipped: no geoinfo_extracted/dsm_09cm_matching_areamojave_sparse_desert_p18.tfw; refusing to write a metric GeoTIFF with a guessed georeference (see 02_DATA_AUDIT.md)
+Export manifest -> <worktree>

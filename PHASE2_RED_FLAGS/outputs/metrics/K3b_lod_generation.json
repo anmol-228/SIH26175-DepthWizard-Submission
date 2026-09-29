@@ -1,0 +1,9 @@
+{
+  "source": "large_area26.glb",
+  "output": "large_LOD_area26.glb",
+  "source_faces": 10670616,
+  "lod_faces": 500000,
+  "decimation_time_s": 28.161490201950073,
+  "file_size_MB": 18.907308,
+  "texture_preserved": true
+}

@@ -1,0 +1,168 @@
+{
+  "IMPORTANT": "The relative height surface is UNITLESS and uncalibrated - no metres, no datum, no map location, no RMSE. On the metric branch, the vertical scale comes from a sparse gated scale/shift fit (not field-validated accuracy), the GeoTIFF's horizontal transform is the input raster's own, and any .glb is a visualization mesh (Z rebased to the tile minimum, Y negated) - not a measurement product.",
+  "a": 3.272727441661839,
+  "b": 198.60363596502287,
+  "branch": "metric",
+  "branch_reason": "metric fit ok (a=3.27273, b=198.604, ransac)",
+  "calibration": {
+    "a": 3.272727441661839,
+    "b": 198.60363596502287,
+    "crs_note": "input's embedded ProjectedCSTypeGeoKey propagated verbatim",
+    "dsm_metres_stats": {
+      "max": 232.0509033203125,
+      "mean": 215.3272705078125,
+      "min": 198.6036376953125
+    },
+    "epsg": 32601,
+    "fit": {
+      "a": 3.272727441661839,
+      "b": 198.60363596502287,
+      "inliers": 17,
+      "method": "ransac",
+      "n_points": 25
+    },
+    "reference": "<USER_HOME>\\AppData\\Local\\Temp\\tmp5ydnzhd0\\ref.npy"
+  },
+  "crs": 32601,
+  "depth_sign": 1,
+  "device": "cpu",
+  "duration_s": 1.058,
+  "environment": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "python": "3.14.6"
+  },
+  "gate_reason": null,
+  "input": {
+    "georeferenced": true,
+    "name": "non_trigger_flat.tif",
+    "path": "<USER_HOME>\\AppData\\Local\\Temp\\tmp5ydnzhd0\\non_trigger_flat.tif",
+    "sha256": "a9d9c831326fa22f19eb172ecd447c7d9fc848fe1fc075db1aa6529e0c06f78b",
+    "shape": [
+      512,
+      512
+    ]
+  },
+  "mesh": {
+    "metric": {
+      "faces": 262144,
+      "gsd": 0.09,
+      "lod_decimated": false,
+      "lod_faces": 262144
+    },
+    "relative": {
+      "faces": 262144,
+      "gsd": 1.0,
+      "gsd_note": "pseudo-GSD: 1 mesh unit per pixel, not a real map/sensor scale",
+      "lod_decimated": false,
+      "lod_faces": 262144
+    },
+    "z_exaggeration": 1.0
+  },
+  "model": {
+    "WARNING": null,
+    "base_model": "stub",
+    "checkpoint": "stub.pt",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "normalization": {
+    "degenerate": false,
+    "high_pct": 98.0,
+    "high_value": 9.210000038146973,
+    "invertible_as": "raw = value*(hi-lo)+lo, /depth_sign",
+    "low_pct": 2.0,
+    "low_value": 1.0099999904632568,
+    "method": "percentile_clip",
+    "output_range": [
+      0.0,
+      1.0
+    ]
+  },
+  "outputs": {
+    "height_relative": "relative_dsm_non_trigger_flat.npy",
+    "metric_elevation_f32": "non_trigger_flat_metric_elevation.f32",
+    "metric_glb": "non_trigger_flat_metric.glb",
+    "metric_lod_glb": "non_trigger_flat_metric_lod.glb",
+    "metric_surface_meta": "non_trigger_flat_metric_surface_meta.json",
+    "metric_tif": "non_trigger_flat_metric.tif",
+    "preview": "non_trigger_flat_preview.png",
+    "relative_elevation_f32": "non_trigger_flat_relative_elevation.f32",
+    "relative_glb": "non_trigger_flat_relative.glb",
+    "relative_lod_glb": "non_trigger_flat_relative_lod.glb",
+    "relative_surface_meta": "non_trigger_flat_relative_surface_meta.json",
+    "sidecar": "relative_dsm_non_trigger_flat.json"
+  },
+  "preflight": {
+    "IMPORTANT": "Thresholds are engineering guards derived from measured findings, NOT validated accuracy guarantees. A pass does not certify metric accuracy; it only means no known-dangerous geometry or reference-elevation relief was detected.",
+    "checks": {
+      "count": 25,
+      "hilly_signature": null,
+      "hilly_signature_evidence": "DW-S1-11 (#32), PR #35 ((internal note, not included)): three candidate signals (windowed relief heterogeneity; sparse-10 RANSAC inlier ratio; reference-range-normalized sparse-fit residual) tested scene-consistently against Mount Adams (known severe failure) and four individual Vaihingen areas through the real production predict/blend/normalize path. All REJECTED BY EVIDENCE, except one residual-based signal restricted to fits already passing the existing a>0 metric gate, which shows no in-sample overlap on only 2 surviving data points - classified MORE EVIDENCE REQUIRED, not a threshold. No production hilly-risk gate was implemented from this model-output signal family (see HILLY_RELIEF_EVIDENCE for the separate, later reference-elevation-relief guard DW-P0-A5 does ship).",
+      "hilly_signature_status": "unsupported - three signals tested and rejected, not untried (#32, PR #35)",
+      "hull_coverage": 0.711914,
+      "reference_relief_evidence": "DW-P0-A5 (#32, 2026-09-11 Phase-2 activation): reference-point elevation relief (max-min of the supplied --reference elevations), a geometric signal independent of model output. PRIMARY threshold source - the SAME statistic used at runtime: PHASE2_RED_FLAGS/outputs/metrics/E_hilly_risk_signal_experiment.json's sampled_reference_range_m, per RANSAC seed, over the same 10 sampled reference points used in that seed's fit (5 seeds x 5 scenes, all included regardless of downstream fit validity - pre-fit threshold, no post-fit conditioning). Known-good (4 Vaihingen areas, 20 samples): 7.774-44.355 m. Known-failure (Mount Adams, 5 samples): 130.650-266.360 m. No overlap (good_max=44.355 m < failure_min=130.650 m). Frozen midpoint rule: threshold = (good_max + failure_min) / 2 = 87.50 m (exact 87.50271606445312). In-sample: 0 known-good samples above threshold, 0 known-failure samples at/below it - screening evidence on n=1 known-failure scene, not a validated error rate. Full derivation: 10_DOCUMENTATION/evidence/DW_P0_A5_hilly_relief_gate/reference_relief_threshold_analysis.json. CORROBORATING CONTEXT ONLY (does not derive this threshold, both are DENSE whole-patch/full-AOI statistics, not the sparse statistic above): PHASE2_RED_FLAGS/outputs/metrics/E_hilly_terrain_eval.json's per-patch oracle results (observed lower-relief patches relief_m <= 118.54 m -> RMSE 3.03-23.89 m; observed high-relief/high-error patches relief_m >= 222.80 m -> RMSE 41.66-62.33 m), and (internal note, not included) SS3/SS8's full-AOI comparison (Vaihingen area6 67.16 m vs Mount Adams 370.4 m) - related evidence from the same preserved data, not independent confirmations of each other. Provisional floor, not a validated cutoff - see HILLY_RELIEF_THRESHOLD_M. A LOW sparse reading is NOT proof of safety outside this preserved dataset - a hilly scene sampled in a narrow elevation band could understate its own relief and pass undetected. Disclosed, open limitation.",
+      "reference_relief_m": 25.92,
+      "reference_relief_status": "within provisional floor",
+      "reference_relief_threshold_m": 87.5,
+      "spread": 0.149155,
+      "thresholds": {
+        "max_reference_relief_m": 87.5,
+        "min_hull_coverage": 0.15,
+        "min_points": 10,
+        "min_spread": 0.05
+      }
+    },
+    "evidence": "PHASE2_RED_FLAGS/outputs/metrics/F_calibration_distribution.json (N=10: uniform 4.856 m, stratified 4.701 m, edge-biased 6.686 m, clustered 15.324 m mean / 28.423 m max)",
+    "pass": true,
+    "reason": "25 reference points, 71.2% hull coverage, spread 0.1492, 25.9 m relief - no known-dangerous geometry or relief detected (provisional thresholds)",
+    "thresholds_provisional": true
+  },
+  "pseudo_gsd": 1.0,
+  "reference": "<USER_HOME>\\AppData\\Local\\Temp\\tmp5ydnzhd0\\ref.npy",
+  "run_started_utc": "2026-09-13T19:39:47.773216+00:00",
+  "schema": "run_pipeline/v0",
+  "stage_timings_s": {
+    "blend": 0.002,
+    "calibrate": 1.031,
+    "load_model": 0.0,
+    "outputs": 0.008,
+    "predict": 0.004,
+    "tile": 0.0,
+    "validate": 0.013
+  },
+  "surface_stats": {
+    "max": 10.219999313354492,
+    "mean": 5.110000133514404,
+    "min": 0.0,
+    "shape": [
+      512,
+      512
+    ]
+  },
+  "tiles": [
+    {
+      "bbox": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "dtype": "float32",
+      "elapsed_s": 0.0,
+      "max": 10.219999313354492,
+      "mean": 5.110000133514404,
+      "min": 0.0,
+      "shape": [
+        512,
+        512
+      ],
+      "tile_id": 0
+    }
+  ],
+  "tiling": {
+    "height": 512,
+    "n_windows": 1,
+    "stride": 384,
+    "width": 512,
+    "window": 512
+  }
+}

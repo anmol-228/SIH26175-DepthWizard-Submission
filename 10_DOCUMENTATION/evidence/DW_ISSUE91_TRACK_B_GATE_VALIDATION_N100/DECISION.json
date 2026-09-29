@@ -1,0 +1,11 @@
+{
+  "gate_source": "docs/final_sprint/phase2/HILLY_RESCUE_EXECUTION_COUNCIL.md#part-4",
+  "mount_adams_declined_count": 5,
+  "mount_adams_total": 5,
+  "control_false_refusal_count": 20,
+  "control_total": 20,
+  "baseline_control_false_refusals": 0,
+  "control_regression": 20,
+  "SUCCESS_THRESHOLD_MET": false,
+  "note": "This validates the EXISTING, unmodified preflight_checks() gate (count + hull_coverage + normalized_spread + reference_relief, shipped since commit 24a95b5 / #25 and 09413db / #32 respectively) against real N=100 uniform-random reference geometry, not new gating logic."
+}

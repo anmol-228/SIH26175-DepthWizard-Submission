@@ -1,0 +1,26 @@
+{
+  "area": 1,
+  "global_rmse": 4.035760375469184,
+  "building_edge": {
+    "building_edge_mean_abs_err": 3.053842977759627,
+    "building_interior_mean_abs_err": 2.9925841365271975,
+    "non_building_mean_abs_err": 3.6335819246089427,
+    "edge_vs_interior_ratio": 1.0204702151844989,
+    "n_edge_px": 195415,
+    "n_interior_px": 1653704,
+    "n_non_building_px": 3071820
+  },
+  "vegetation_tree_class": {
+    "tree_class_mean_abs_err": 3.771753903949367,
+    "non_tree_mean_abs_err": 3.340309793151175,
+    "tree_vs_nontree_ratio": 1.1291629032980133,
+    "n_tree_px": 625490
+  },
+  "shadow": {
+    "shadow_threshold_luminance": 43.0,
+    "shadow_mean_abs_err": 3.769801150337427,
+    "non_shadow_mean_abs_err": 3.350400839665819,
+    "shadow_vs_nonshadow_ratio": 1.1251791444493073,
+    "n_shadow_px": 525051
+  }
+}

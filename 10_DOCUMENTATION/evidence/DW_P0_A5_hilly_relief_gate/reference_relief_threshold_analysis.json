@@ -1,0 +1,318 @@
+{
+  "schema": "dw-p0-a5-reference-relief-threshold-analysis/v1",
+  "generated_utc": "2026-09-13T19:08:00.632765+00:00",
+  "issue": "#32 (DW-P0-A5, Phase-2 activation 2026-09-11)",
+  "base_sha": "24d0e24d5e46243c35aa463f9e4bf95deb88c42b",
+  "branch": "feature/dw-p0-a5-hilly-relief-refusal",
+  "source_experiment_artifact": {
+    "path": "PHASE2_RED_FLAGS/outputs/metrics/E_hilly_risk_signal_experiment.json",
+    "sha256": "8635771e5cd80df601e89b4f9371fcceb6c73c17615d179da0d0626a817f7cd6",
+    "schema_of_source": "dw-s1-11-hilly-risk-signal/v2",
+    "source_generated_utc": "2026-09-05T06:52:53.322543+00:00"
+  },
+  "producing_script": {
+    "path": "PHASE2_RED_FLAGS/scripts/E_05_hilly_risk_signal_experiment.py",
+    "sha256": "a55f4267c1331913c8202f7e5a9dd0fdc1d324919404c75e36dfa36e9010d60b"
+  },
+  "statistic": {
+    "name": "sampled_reference_range_m",
+    "definition": "max(elevation) - min(elevation) over the N_SPARSE=10 sampled reference points used in one RANSAC seed's scale/shift fit - identical operation to src/preflight.py::reference_elevation_relief() applied to a real --reference file's own elevation column.",
+    "units": "metres",
+    "runtime_availability": "PRE-FIT: available before any scale/shift fit is attempted, from the reference points alone.",
+    "excludes_post_fit_info": true
+  },
+  "frozen_selection_rule": "If good_max < failure_min (no overlap): threshold = (good_max + failure_min) / 2. If good_max >= failure_min: no threshold is defensible from this evidence (threshold = null). Declared before computing good_max/failure_min; not chosen after inspecting the numbers; no alternative rule was evaluated or compared.",
+  "sample_inclusion_policy": "ALL 5 RANSAC seeds x ALL 5 scenes included, regardless of fit_valid_for_metric - that field is a downstream, post-fit signal (run_pipeline.py::calibrate()'s existing a>0 metric-fit gate) and must not condition this pre-fit threshold's sample selection.",
+  "known_good_scenes": [
+    "vaihingen_area34",
+    "vaihingen_area38",
+    "vaihingen_area6",
+    "vaihingen_area8"
+  ],
+  "known_failure_scenes": [
+    "mount_adams"
+  ],
+  "n_known_good_samples": 20,
+  "n_known_failure_samples": 5,
+  "known_good_range_m": {
+    "min": 7.774383544921875,
+    "max": 44.35540771484375,
+    "mean": 17.260824584960936
+  },
+  "known_failure_range_m": {
+    "min": 130.6500244140625,
+    "max": 266.3599853515625,
+    "mean": 183.07801513671876
+  },
+  "good_max": 44.35540771484375,
+  "failure_min": 130.6500244140625,
+  "distribution_overlap": false,
+  "threshold_m_exact": 87.50271606445312,
+  "threshold_m_provisional_rounded": 87.5,
+  "observed_in_sample_false_refuse_count": 0,
+  "observed_in_sample_false_refuse_detail": [],
+  "observed_in_sample_false_accept_count": 0,
+  "observed_in_sample_false_accept_detail": [],
+  "per_sample_values": [
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "group_label": "known_failure",
+      "seed": 0,
+      "sampled_reference_range_m": 190.75006103515625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": false,
+      "existing_fit_rejection_reason": "non-positive scale"
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "group_label": "known_failure",
+      "seed": 1,
+      "sampled_reference_range_m": 130.6500244140625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": false,
+      "existing_fit_rejection_reason": "non-positive scale"
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "group_label": "known_failure",
+      "seed": 2,
+      "sampled_reference_range_m": 266.3599853515625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": false,
+      "existing_fit_rejection_reason": "non-positive scale"
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "group_label": "known_failure",
+      "seed": 3,
+      "sampled_reference_range_m": 134.510009765625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "group_label": "known_failure",
+      "seed": 4,
+      "sampled_reference_range_m": 193.1199951171875,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "group_label": "known_good_most_heterogeneous_available",
+      "seed": 0,
+      "sampled_reference_range_m": 13.879180908203125,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "group_label": "known_good_most_heterogeneous_available",
+      "seed": 1,
+      "sampled_reference_range_m": 15.225738525390625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "group_label": "known_good_most_heterogeneous_available",
+      "seed": 2,
+      "sampled_reference_range_m": 12.01531982421875,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "group_label": "known_good_most_heterogeneous_available",
+      "seed": 3,
+      "sampled_reference_range_m": 16.194793701171875,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "group_label": "known_good_most_heterogeneous_available",
+      "seed": 4,
+      "sampled_reference_range_m": 9.21209716796875,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "group_label": "known_good_high_absolute_relief",
+      "seed": 0,
+      "sampled_reference_range_m": 22.95562744140625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "group_label": "known_good_high_absolute_relief",
+      "seed": 1,
+      "sampled_reference_range_m": 44.35540771484375,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "group_label": "known_good_high_absolute_relief",
+      "seed": 2,
+      "sampled_reference_range_m": 28.48919677734375,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "group_label": "known_good_high_absolute_relief",
+      "seed": 3,
+      "sampled_reference_range_m": 42.34759521484375,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "group_label": "known_good_high_absolute_relief",
+      "seed": 4,
+      "sampled_reference_range_m": 23.38043212890625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 0,
+      "sampled_reference_range_m": 14.306549072265625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 1,
+      "sampled_reference_range_m": 7.774383544921875,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 2,
+      "sampled_reference_range_m": 9.806182861328125,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 3,
+      "sampled_reference_range_m": 10.451446533203125,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 4,
+      "sampled_reference_range_m": 7.88677978515625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 0,
+      "sampled_reference_range_m": 11.927520751953125,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 1,
+      "sampled_reference_range_m": 10.18487548828125,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 2,
+      "sampled_reference_range_m": 13.918731689453125,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 3,
+      "sampled_reference_range_m": 12.568450927734375,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "group_label": "known_good_ordinary",
+      "seed": 4,
+      "sampled_reference_range_m": 18.336181640625,
+      "candidate_diagnostic_evaluable": true,
+      "fit_valid_for_metric": true,
+      "existing_fit_rejection_reason": null
+    }
+  ],
+  "limitations": [
+    "Screening evidence, not a validated error-rate estimate: 'in-sample false-refuse/false-accept count' describes this one preserved dataset, not a statistical false-positive/false-negative RATE that would generalize to unseen scenes.",
+    "n=1 known-failure SCENE (Mount Adams). Its 5 RANSAC seeds are 5 different random draws of reference points from the SAME underlying terrain, not 5 independent failure terrains - resampling one scene does not create independent evidence of generalization to other hilly terrain.",
+    "n=4 known-good scenes (Vaihingen areas), all drawn from the same flat-to-rolling ISPRS benchmark region - no genuinely 'moderately hilly' known-good control exists in this repository's preserved data.",
+    "The sampled reference elevations in the SOURCE experiment are simulated controls (drawn from each scene's evaluation DSM), not independently surveyed field GCPs - see E_05_hilly_risk_signal_experiment.py's own 'SPARSE-REFERENCE PROVENANCE' note.",
+    "Passing (relief below threshold) does not certify metric accuracy or prove the scene is safe; it means this specific check did not trigger.",
+    "Failing (relief above threshold) does not prove a terrain taxonomy ('this is hilly'); it is a conservative refusal guard on one specific risk indicator.",
+    "This is NOT a validated accuracy threshold - it is a provisional engineering separator inside an observed, preserved, but small (n=25 total samples across 5 scenes) direct-statistic gap."
+  ],
+  "claim_boundary": "This threshold makes ONE specific failure mode (a whole-scene metric fit over reference points spanning a large elevation range) safer to fail into. It does not solve hilly-terrain accuracy, does not validate the model in hilly terrain, and does not guarantee every hilly scene triggers this check - a hilly scene sampled by reference points confined to a narrow elevation band would not."
+}

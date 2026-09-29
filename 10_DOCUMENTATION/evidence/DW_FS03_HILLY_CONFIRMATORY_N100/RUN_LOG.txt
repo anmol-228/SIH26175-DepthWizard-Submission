@@ -1,0 +1,42 @@
+device=cuda  checkpoint=da2_small_finetuned_iter2_partial_unfreeze.pt
+
+Loading weights:   0%|          | 0/287 [00:00<?, ?it/s]
+Loading weights: 100%|##########| 287/287 [00:00<00:00, 5554.04it/s]
+[mount_adams] 4000x2200 role=known_failure
+  mount_adams N=100 seed=0: global_valid=False global_rmse=None local_valid_cov=13/28 local_rmse=38.502767412577136
+  mount_adams N=100 seed=1: global_valid=False global_rmse=None local_valid_cov=13/28 local_rmse=38.37280018537113
+  mount_adams N=100 seed=2: global_valid=False global_rmse=None local_valid_cov=15/28 local_rmse=55.4817325166241
+  mount_adams N=100 seed=3: global_valid=False global_rmse=None local_valid_cov=13/28 local_rmse=35.445526340662944
+  mount_adams N=100 seed=4: global_valid=False global_rmse=None local_valid_cov=16/28 local_rmse=61.92659894259264
+[vaihingen_area6] 2557x1887 role=known_good
+  vaihingen_area6 N=100 seed=0: global_valid=True global_rmse=11.014475446311854 local_valid_cov=11/12 local_rmse=6.239647160268301
+  vaihingen_area6 N=100 seed=1: global_valid=True global_rmse=11.069740900374606 local_valid_cov=11/12 local_rmse=12.15840372052092
+  vaihingen_area6 N=100 seed=2: global_valid=True global_rmse=10.029004957769843 local_valid_cov=11/12 local_rmse=6.507463547157716
+  vaihingen_area6 N=100 seed=3: global_valid=True global_rmse=11.295080433376603 local_valid_cov=10/12 local_rmse=8.111079408680286
+  vaihingen_area6 N=100 seed=4: global_valid=True global_rmse=10.63045684210371 local_valid_cov=10/12 local_rmse=8.606425769149528
+[vaihingen_area8] 2557x1887 role=known_good
+  vaihingen_area8 N=100 seed=0: global_valid=True global_rmse=2.328610130276178 local_valid_cov=11/12 local_rmse=5.2839136232706485
+  vaihingen_area8 N=100 seed=1: global_valid=True global_rmse=2.346608471938801 local_valid_cov=10/12 local_rmse=2.060616822803813
+  vaihingen_area8 N=100 seed=2: global_valid=True global_rmse=2.3301893473931004 local_valid_cov=12/12 local_rmse=2.106028282239303
+  vaihingen_area8 N=100 seed=3: global_valid=True global_rmse=2.322788099006878 local_valid_cov=11/12 local_rmse=2.1397351950508923
+  vaihingen_area8 N=100 seed=4: global_valid=True global_rmse=2.3259439588390856 local_valid_cov=12/12 local_rmse=3.553867553126606
+[vaihingen_area34] 2555x1388 role=known_good
+  vaihingen_area34 N=100 seed=0: global_valid=True global_rmse=1.9782528646906166 local_valid_cov=8/8 local_rmse=2.1909875919126143
+  vaihingen_area34 N=100 seed=1: global_valid=True global_rmse=1.931282917009346 local_valid_cov=8/8 local_rmse=3.2806603930557574
+  vaihingen_area34 N=100 seed=2: global_valid=True global_rmse=1.9214475862180547 local_valid_cov=5/8 local_rmse=2.101730316045092
+  vaihingen_area34 N=100 seed=3: global_valid=True global_rmse=1.954604227692985 local_valid_cov=8/8 local_rmse=2.293425899097282
+  vaihingen_area34 N=100 seed=4: global_valid=True global_rmse=1.881963023511029 local_valid_cov=7/8 local_rmse=2.4954718638068103
+[vaihingen_area38] 2550x3816 role=known_good
+  vaihingen_area38 N=100 seed=0: global_valid=True global_rmse=2.864775872017802 local_valid_cov=25/28 local_rmse=3.0712101011719
+  vaihingen_area38 N=100 seed=1: global_valid=True global_rmse=2.9596961920755516 local_valid_cov=23/28 local_rmse=3.000659528326153
+  vaihingen_area38 N=100 seed=2: global_valid=True global_rmse=2.80182537186965 local_valid_cov=26/28 local_rmse=2.1346181030404185
+  vaihingen_area38 N=100 seed=3: global_valid=True global_rmse=2.7738962988740825 local_valid_cov=25/28 local_rmse=2.4314518368045284
+  vaihingen_area38 N=100 seed=4: global_valid=True global_rmse=2.8434184770765043 local_valid_cov=25/28 local_rmse=2.534726046577216
+
+Wrote <worktree>
+Wrote <worktree>
+
+STOPPING_RULE_PASS = False
+positive_seed_count = 0/5
+degraded_control_count = 4/4
+EXIT_CODE=0

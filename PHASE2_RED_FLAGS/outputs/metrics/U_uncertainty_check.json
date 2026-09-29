@@ -1,0 +1,10 @@
+{
+  "method": "TTA variance (4 views: identity, h-flip, +/-15% brightness)",
+  "global_pixelwise_corr_std_vs_abserr": 0.18978098419157755,
+  "mean_per_patch_corr": 0.16327274132738265,
+  "median_per_patch_corr": 0.17117442417641426,
+  "top10pct_std_mean_abserr": 1.8427358865737915,
+  "bottom10pct_std_mean_abserr": 0.967667281627655,
+  "ratio_top_vs_bottom": 1.9043073654174805,
+  "n_patches": 132
+}

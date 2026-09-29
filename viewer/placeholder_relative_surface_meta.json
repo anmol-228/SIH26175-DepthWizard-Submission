@@ -1,0 +1,28 @@
+{
+  "schema": "viewer_input_v1",
+  "branch": "relative",
+  "H": 64,
+  "W": 64,
+  "dtype": "float32",
+  "byte_order": "little",
+  "elevation_payload": "placeholder_relative_elevation.f32",
+  "units": "unitless",
+  "gsd": null,
+  "pseudo_gsd": 1.0,
+  "z_exaggeration": 1.5,
+  "crs": null,
+  "mesh_glb": "placeholder_relative.glb",
+  "lod_glb": "placeholder_relative.glb",
+  "run_manifest": "run_manifest.json",
+  "is_placeholder": true,
+  "normalization": null,
+  "nodata": null,
+  "mesh_frame": {
+    "x": "col * gsd",
+    "y": "-row * gsd",
+    "z": "(elevation - elevation_min) * z_exaggeration",
+    "elevation_min": -1.165025234222412,
+    "note": "gsd here means whichever of gsd/pseudo_gsd is non-null above - the producer mesh frame frozen in src/mesh.heightfield_to_mesh()"
+  },
+  "note": "synthetic placeholder surface, no calibration -- never label this metres; is_placeholder=true, per IF-1 no silent placeholder substitution"
+}

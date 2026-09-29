@@ -1,0 +1,41 @@
+DW-S1-15 / P0-A4 / Issue #48 — OFFICIAL RUN ENVIRONMENT CAPTURE
+UTC timestamp: 2026-09-13T12:00:08Z
+Local timestamp: 2026-09-13 17:30:08 IST
+
+OS: Windows 11 Pro 10.0.26200 (host); MSYS/MINGW64 shell reports 3.6.7-fb42d713.x86_64
+PowerShell version: 5.1.26100.9444
+
+Python executable: python
+Python version: 3.14.6
+
+torch: 2.9.0+cu129
+CUDA available: True
+CUDA device: NVIDIA GeForce RTX 5060 Ti
+torch.version.cuda (CUDA runtime): 12.9
+GPU driver version (nvidia-smi): 610.62
+GPU memory: 16311 MiB
+
+numpy: 2.5.2
+scikit-learn: 1.9.0
+transformers: 5.15.1
+rasterio: NOT INSTALLED (confirmed not required by scripts/07_calibrate_and_eval.py or src/da2_utils.py, src/metrics.py, src/geoio.py -- Gate 8 dual-verified)
+
+Historical accepted rerun environment (for reference only, NOT claimed identical): Linux / Python 3.13.8.
+This run's actual environment: Windows / Python 3.14.6, as captured above. No environment identity is claimed between the two.
+
+HuggingFace model cache: depth-anything/Depth-Anything-V2-Small-hf
+  snapshot: 5426e4f0f36572d16453bbda7a8389317b1bef99
+  cache location: <USER_HOME>\.cache\huggingface\hub\models--depth-anything--Depth-Anything-V2-Small-hf
+  contains: config.json, model.safetensors
+  Gate 8 dual-verified: load_model() defaults to local_files_only=True (offline, fail-closed); evaluator call site passes no allow_backbone_download=True; zero network activity expected during the official run.
+
+Repo SHA (frozen, dual-gate-verified at Gates 5/9): 4a442967c9a91361e24241c20a02b3a5bcd83a8e
+Official isolated worktree: <worktree>
+
+Artifact SHA-256 (dual-gate-verified): 8808d5721ae6c2186ccb046965780a586c2af9c973a9bfc15adf19f31b2709a6
+Run-local manifest SHA-256 (dual-gate-verified): da65aa14aa1ea2d7062691029e55115e8f25f2a71174390a6d01d0be643d6401
+Checkpoint SHA-256 (dual-gate-verified): 74ccde40cf703095ed2adb783394d0dd2692b3ffaaf3b8a9e534e27feeba78d8
+Config SHA-256 (dual-gate-verified): 970f48727b6d375800e0386ebfbf084bbb86c6dfb35b24b16c910dd45dae8198
+Evaluator script SHA-256 (dual-gate-verified, origin/main): eb5609db5634efd611741b9cee8e578e4c7f804a3c289b51fee35ba1f4e004ab
+
+Full pip freeze: see pip_freeze.txt (same directory)

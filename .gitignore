@@ -1,0 +1,16 @@
+# environments and caches
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.pytest_cache/
+
+# model weights and datasets are never committed (see ARTIFACT_MANIFEST.md, DATA_SOURCES.md)
+checkpoints/*.pt
+data/raw/
+data/processed/
+data/staging/
+
+# run outputs and uploads are regenerable
+/outputs/
+logs/*.log

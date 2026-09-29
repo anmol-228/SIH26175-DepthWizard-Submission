@@ -1,0 +1,99 @@
+{
+  "gate_source": "docs/final_sprint/phase2/HILLY_ACCURACY_RESCUE_EXPERIMENT_CONTRACT.md",
+  "valid_fit_requirement": 4,
+  "hilly_oracle_rmse_reference_m": 11.5,
+  "hilly_rmse_margin_multiplier": 2.0,
+  "hilly_rmse_limit_m": 23.0,
+  "control_rmse_regression_limit_m": 1.0,
+  "hilly_table": [
+    {
+      "seed": 0,
+      "fit_valid": true,
+      "rmse": 60.70265673959465,
+      "a": 4.677275915819281,
+      "b": 954.0877898660931,
+      "baseline_fit_valid": false,
+      "baseline_rmse": null
+    },
+    {
+      "seed": 1,
+      "fit_valid": true,
+      "rmse": 62.253709354849114,
+      "a": 13.077283257159513,
+      "b": 923.7684876092013,
+      "baseline_fit_valid": false,
+      "baseline_rmse": null
+    },
+    {
+      "seed": 2,
+      "fit_valid": true,
+      "rmse": 67.01914221820759,
+      "a": 15.1653327734285,
+      "b": 904.0629660053835,
+      "baseline_fit_valid": false,
+      "baseline_rmse": null
+    },
+    {
+      "seed": 3,
+      "fit_valid": false,
+      "rmse": null,
+      "a": -7.797086956519183,
+      "b": 980.5409791832789,
+      "baseline_fit_valid": false,
+      "baseline_rmse": null
+    },
+    {
+      "seed": 4,
+      "fit_valid": false,
+      "rmse": null,
+      "a": -2.4262059394988476,
+      "b": 962.1614906080958,
+      "baseline_fit_valid": false,
+      "baseline_rmse": null
+    }
+  ],
+  "valid_seed_count": 3,
+  "max_valid_seed_rmse_m": 67.01914221820759,
+  "hilly_rmse_within_margin": false,
+  "control_table": [
+    {
+      "scene": "vaihingen_area6",
+      "median_baseline_rmse": 11.014475446311854,
+      "median_candidate_rmse": 11.09806201980245,
+      "rmse_delta": 0.08358657349059584,
+      "baseline_valid_count": 5,
+      "candidate_valid_count": 5,
+      "regressed": false
+    },
+    {
+      "scene": "vaihingen_area8",
+      "median_baseline_rmse": 2.328610130276178,
+      "median_candidate_rmse": 2.3339204847915007,
+      "rmse_delta": 0.0053103545153225795,
+      "baseline_valid_count": 5,
+      "candidate_valid_count": 5,
+      "regressed": false
+    },
+    {
+      "scene": "vaihingen_area34",
+      "median_baseline_rmse": 1.931282917009346,
+      "median_candidate_rmse": 1.9628498054061783,
+      "rmse_delta": 0.031566888396832304,
+      "baseline_valid_count": 5,
+      "candidate_valid_count": 5,
+      "regressed": false
+    },
+    {
+      "scene": "vaihingen_area38",
+      "median_baseline_rmse": 2.8434184770765043,
+      "median_candidate_rmse": 2.824708354604235,
+      "rmse_delta": -0.01871012247226922,
+      "baseline_valid_count": 5,
+      "candidate_valid_count": 5,
+      "regressed": false
+    }
+  ],
+  "control_regressed": false,
+  "STOPPING_RULE_PASS": false,
+  "CLASSIFICATION": "FAIL"
+}

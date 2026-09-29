@@ -1,0 +1,89 @@
+{
+  "_fixture_meta": {
+    "boundary": "PIPELINE -> 3D (height array + RGB -> textured mesh) -- handbook Part X, Part III.9",
+    "version_status": "v1 / FROZEN",
+    "reasoning": "heightfield_to_mesh() in PHASE2_RED_FLAGS/scripts/K3_mesh_pipeline.py is a single, self-contained function with a stable signature, demonstrated end-to-end at three real scales (small/medium/large, all on real Vaihingen area-26 data) plus one decimated LOD variant (K4), with every number below reproduced from real committed metrics files (not estimates). Nothing in the codebase or any handbook roadmap item proposes changing this function's inputs/outputs soon. 'v1 / FROZEN' per HANDOFF_INTERFACE_POLICY.md means: a future change requires a v2 label and a note to Ashmita/Aishee, not a silent edit -- it does NOT mean this is the final desired mesh pipeline (see caveats below, which consumers must still know even though the contract itself is frozen).",
+    "verified_against_code_on": "2026-08-26",
+    "verified_by": "AI project agent (code-reading check; not independently human-verified)",
+    "files_read_to_verify": [
+      "PHASE2_RED_FLAGS/scripts/K3_mesh_pipeline.py",
+      "PHASE2_RED_FLAGS/outputs/metrics/K3_mesh_pipeline.json",
+      "PHASE2_RED_FLAGS/outputs/metrics/K4_viewer_browser_test.json",
+      "src/geoio.py"
+    ]
+  },
+
+  "producing_function": "heightfield_to_mesh(elev, rgb, gsd, z_exaggeration=1.0, downsample=1) -> trimesh.Trimesh, defined in PHASE2_RED_FLAGS/scripts/K3_mesh_pipeline.py",
+
+  "input": {
+    "elev": {
+      "shape": "(H, W)",
+      "dtype": "float32",
+      "units": "metres",
+      "example_source": "geoio.load_geotiff(dsm_path).array.astype(np.float32) -- i.e. currently fed from the GROUND-TRUTH DSM in the K3 test script, not yet wired to a live calibrated prediction (same integration gap noted in calibration_output_v0.json's component_2)",
+      "IMPORTANT": "absolute elevation is NOT preserved in the output mesh -- see z_computation below"
+    },
+    "rgb": { "shape": "(H, W, 3)", "dtype": "uint8" },
+    "gsd": { "type": "float", "units": "metres/pixel", "example_value_used": 0.09 },
+    "z_exaggeration": { "type": "float", "default": 1.0, "example_value_used": 1.5, "purpose": "visual relief-exaggeration multiplier, applied AFTER rebasing to the tile minimum" },
+    "downsample": { "type": "int", "default": 1, "purpose": "integer stride subsample of elev and rgb before meshing; used for the 'medium' config (downsample=2) in the real run below" }
+  },
+
+  "z_computation": {
+    "formula": "Z = (elev - elev.min()) * z_exaggeration",
+    "consequence_for_consumers": "The mesh's vertical origin is rebased to THIS TILE's own minimum elevation, not to the source GeoTIFF's absolute datum/CRS elevation. A viewer needing true absolute height (e.g. to match a real-world basemap or to combine multiple tiles at correct relative elevation) must add elev.min() back separately -- that value is NOT carried in the .glb and must be sourced out-of-band (e.g. from the calibration report or the source GeoTIFF)."
+  },
+
+  "output": {
+    "format": "glTF binary (.glb), written via trimesh.Trimesh.export(path)",
+    "geometry": "regular-grid triangulated heightfield: 2 triangles per grid cell (v00-v01-v10 and v10-v01-v11 winding), vertex positions = (x = col_index * gsd * downsample, y = -row_index * gsd * downsample, z = rebased elevation per z_computation)",
+    "texture": "trimesh.visual.material.PBRMaterial(baseColorTexture=<PIL Image of the rgb array>), applied via trimesh.visual.TextureVisuals with per-vertex UV in standard [0,1] image-space (u = col/(W-1), v = 1 - row/(H-1))",
+    "watertight": false,
+    "coordinate_note": "Y axis is negated ('-Y so north-up looks right in viewer' -- verbatim code comment). This is a display heuristic for this specific viewer setup, not a general CRS-correct map projection -- do not assume it generalizes to a different basemap/orientation without checking.",
+    "mesh_generation_call_used_in_real_run": "mesh = heightfield_to_mesh(elev, rgb, gsd=0.09, z_exaggeration=1.5, downsample=cfg['downsample'])",
+
+    "real_examples_from_K3_mesh_pipeline.json": [
+      {
+        "name": "small", "area": 26, "downsample": 1, "input_shape": [512, 512],
+        "n_vertices": 262144, "n_faces": 522242,
+        "gen_time_s": 0.011432647705078125, "export_time_s": 0.09192776679992676,
+        "file_size_MB": 11.896016, "is_watertight": false,
+        "bounds": [[0.0, -45.989999999999995, 0.0], [45.989999999999995, -0.0, 44.318023681640625]]
+      },
+      {
+        "name": "medium", "area": 26, "downsample": 2, "input_shape": [1783, 2995],
+        "n_vertices": 1336216, "n_faces": 2667654,
+        "gen_time_s": 0.06394243240356445, "export_time_s": 0.43489718437194824,
+        "file_size_MB": 61.186048, "is_watertight": false,
+        "bounds": [[0.0, -160.38, 0.0], [269.46, -0.0, 60.08740997314453]]
+      },
+      {
+        "name": "large", "area": 26, "downsample": 1, "input_shape": [1783, 2995],
+        "n_vertices": 5340085, "n_faces": 10670616,
+        "gen_time_s": 0.22456812858581543, "export_time_s": 1.8118977546691895,
+        "file_size_MB": 242.74694, "is_watertight": false,
+        "bounds": [[0.0, -160.38, 0.0], [269.46, -0.0, 60.506996154785156]]
+      }
+    ],
+
+    "lod_status": {
+      "formal_multi_level_LOD_system": false,
+      "what_actually_exists": "ONE additional decimated variant has been produced and browser-tested (K4): large_area26.glb (10,670,616 faces / 242.75 MB) -> large_LOD_area26.glb (500,000 faces / 9.01 MB), via trimesh.simplify_quadric_decimation (fast_simplification backend), 15.48 s one-time decimation cost. This is a single ad-hoc post-process call, not a parameterized 'give me N LOD levels' API.",
+      "handbook_discrepancy_found": "Part X of the handbook states the PIPELINE -> 3D output is 'textured .glb mesh (one per requested LOD level)', which reads as if a formalized multi-LOD ladder (e.g. LOD0/LOD1/LOD2 requested by name/index) already exists or is parameterized in heightfield_to_mesh(). Code inspection shows this is not the case -- heightfield_to_mesh() has no LOD-level parameter at all; only a generic 'downsample' integer stride, plus the separate one-off K4 decimation script. Ashmita/Aishee should treat 'request N LOD levels via one call' as a to-be-built capability, not an existing one, when planning FPS-harness work."
+    },
+
+    "browser_load_verification": {
+      "source_file": "PHASE2_RED_FLAGS/outputs/metrics/K4_viewer_browser_test.json",
+      "renderer": "three.js 0.160.0 (unpkg CDN) + GLTFLoader + OrbitControls + WebGLRenderer",
+      "results": [
+        { "model": "small_area26.glb", "size_MB": 11.90, "triangles": 522242, "load_time_s": 0.054, "console_errors": 0, "load_success": true },
+        { "model": "medium_area26.glb", "size_MB": 61.19, "triangles": 2667654, "load_time_s": 0.269, "console_errors": 0, "load_success": true },
+        { "model": "large_area26.glb", "size_MB": 242.75, "triangles": 10670616, "load_time_s": 0.627, "console_errors": 0, "load_success": true },
+        { "model": "large_LOD_area26.glb", "size_MB": 9.01, "triangles": 500000, "load_time_s": 0.034, "console_errors": 0, "load_success": true }
+      ],
+      "fps_measured": false,
+      "fps_caveat_verbatim": "document.visibilityState remained 'hidden' throughout in the sandboxed browser pane, which throttles requestAnimationFrame per browser spec, so true rendered FPS could NOT be measured. Load time, parse time, and GPU-buffer-upload success/failure ARE real measured results.",
+      "load_time_caveat": "load_time_s measured over localhost (same machine) -- not representative of real download time over an internet connection for a judge-facing demo."
+    }
+  }
+}

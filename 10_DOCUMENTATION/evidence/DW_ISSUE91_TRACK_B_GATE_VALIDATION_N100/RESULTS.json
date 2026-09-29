@@ -1,0 +1,419 @@
+{
+  "schema": "dw-fs-issue91-track-b-gate-validation-n100/v1",
+  "issue_number": 91,
+  "issue_url": "internal tracker item 91",
+  "contract_path": "docs/final_sprint/phase2/HILLY_RESCUE_EXECUTION_COUNCIL.md#part-4",
+  "preregistration_timestamp_utc": "2026-09-23T15:51:11Z",
+  "run_start_utc": "2026-09-23T15:58:27.962515+00:00",
+  "run_end_utc": "2026-09-23T15:58:28.399180+00:00",
+  "git": {
+    "branch": "issue-91-hilly-rescue-sep23",
+    "head": "0c0b9c58836c7cfc336850e82ab5e436a90ce23f",
+    "tree_state": "dirty",
+    "status_lines": [
+      "?? 10_DOCUMENTATION/evidence/DW_ISSUE91_TRACK_A_CONSTRAINED_REFIT/DECISION.json",
+      "?? 10_DOCUMENTATION/evidence/DW_ISSUE91_TRACK_A_CONSTRAINED_REFIT/RESULTS.json",
+      "?? PHASE2_RED_FLAGS/scripts/E_08_track_a_constrained_calibration_refit.py",
+      "?? PHASE2_RED_FLAGS/scripts/E_09_track_b_gate_validation_n100.py",
+      "?? tests/test_track_a_constrained_calibration.py"
+    ]
+  },
+  "experiment_script": {
+    "path": "PHASE2_RED_FLAGS/scripts/E_09_track_b_gate_validation_n100.py",
+    "sha256": "754575adbcfd8d4a4502386e4ca102c0f53db2c75593724edd7a70e36309f1c7"
+  },
+  "preflight_module_note": "src/preflight.py NOT modified by this script - this is a validation-evidence run of already-shipped gating logic.",
+  "runs": [
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "seed": 0,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0325 below provisional floor 0.05; points are bunched even if their hull is wide; reference points span 348.2 m of elevation relief (provisional hilly-risk floor 87.5 m); one whole-scene scale/shift fit over that much relief is the failure mode measured at 60-70 m RMSE on Mount Adams (see #32, HILLY_RELIEF_EVIDENCE) - declining rather than writing an unsupported confident metric DSM",
+      "count": 100,
+      "hull_coverage": 0.906245,
+      "spread": 0.0325,
+      "reference_relief_m": 348.17,
+      "triggered_checks": [
+        "spread",
+        "reference_relief"
+      ]
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "seed": 1,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0350 below provisional floor 0.05; points are bunched even if their hull is wide; reference points span 281.6 m of elevation relief (provisional hilly-risk floor 87.5 m); one whole-scene scale/shift fit over that much relief is the failure mode measured at 60-70 m RMSE on Mount Adams (see #32, HILLY_RELIEF_EVIDENCE) - declining rather than writing an unsupported confident metric DSM",
+      "count": 100,
+      "hull_coverage": 0.841605,
+      "spread": 0.034956,
+      "reference_relief_m": 281.58,
+      "triggered_checks": [
+        "spread",
+        "reference_relief"
+      ]
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "seed": 2,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0333 below provisional floor 0.05; points are bunched even if their hull is wide; reference points span 340.2 m of elevation relief (provisional hilly-risk floor 87.5 m); one whole-scene scale/shift fit over that much relief is the failure mode measured at 60-70 m RMSE on Mount Adams (see #32, HILLY_RELIEF_EVIDENCE) - declining rather than writing an unsupported confident metric DSM",
+      "count": 100,
+      "hull_coverage": 0.924816,
+      "spread": 0.033319,
+      "reference_relief_m": 340.15,
+      "triggered_checks": [
+        "spread",
+        "reference_relief"
+      ]
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "seed": 3,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0310 below provisional floor 0.05; points are bunched even if their hull is wide; reference points span 297.5 m of elevation relief (provisional hilly-risk floor 87.5 m); one whole-scene scale/shift fit over that much relief is the failure mode measured at 60-70 m RMSE on Mount Adams (see #32, HILLY_RELIEF_EVIDENCE) - declining rather than writing an unsupported confident metric DSM",
+      "count": 100,
+      "hull_coverage": 0.88114,
+      "spread": 0.031034,
+      "reference_relief_m": 297.51,
+      "triggered_checks": [
+        "spread",
+        "reference_relief"
+      ]
+    },
+    {
+      "scene": "mount_adams",
+      "role": "known_failure",
+      "seed": 4,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0308 below provisional floor 0.05; points are bunched even if their hull is wide; reference points span 331.4 m of elevation relief (provisional hilly-risk floor 87.5 m); one whole-scene scale/shift fit over that much relief is the failure mode measured at 60-70 m RMSE on Mount Adams (see #32, HILLY_RELIEF_EVIDENCE) - declining rather than writing an unsupported confident metric DSM",
+      "count": 100,
+      "hull_coverage": 0.895782,
+      "spread": 0.030791,
+      "reference_relief_m": 331.4,
+      "triggered_checks": [
+        "spread",
+        "reference_relief"
+      ]
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "seed": 0,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0347 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.905966,
+      "spread": 0.034683,
+      "reference_relief_m": 50.759,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "seed": 1,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0373 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.841584,
+      "spread": 0.037256,
+      "reference_relief_m": 49.919,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "seed": 2,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0358 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.924808,
+      "spread": 0.035824,
+      "reference_relief_m": 55.126,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "seed": 3,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0331 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.881152,
+      "spread": 0.033065,
+      "reference_relief_m": 49.048,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area6",
+      "role": "known_good",
+      "seed": 4,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0328 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.895746,
+      "spread": 0.032793,
+      "reference_relief_m": 59.625,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "seed": 0,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0347 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.905966,
+      "spread": 0.034683,
+      "reference_relief_m": 25.302,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "seed": 1,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0373 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.841584,
+      "spread": 0.037256,
+      "reference_relief_m": 21.855,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "seed": 2,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0358 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.924808,
+      "spread": 0.035824,
+      "reference_relief_m": 19.725,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "seed": 3,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0331 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.881152,
+      "spread": 0.033065,
+      "reference_relief_m": 16.972,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area8",
+      "role": "known_good",
+      "seed": 4,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0328 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.895746,
+      "spread": 0.032793,
+      "reference_relief_m": 19.795,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "seed": 0,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0324 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.90625,
+      "spread": 0.032363,
+      "reference_relief_m": 17.287,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "seed": 1,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0348 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.841623,
+      "spread": 0.034795,
+      "reference_relief_m": 20.839,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "seed": 2,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0332 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.925112,
+      "spread": 0.033207,
+      "reference_relief_m": 15.337,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "seed": 3,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0309 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.881293,
+      "spread": 0.030909,
+      "reference_relief_m": 17.28,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area34",
+      "role": "known_good",
+      "seed": 4,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0307 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.895967,
+      "spread": 0.030699,
+      "reference_relief_m": 16.192,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "seed": 0,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0358 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.906056,
+      "spread": 0.035776,
+      "reference_relief_m": 19.35,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "seed": 1,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0359 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.841471,
+      "spread": 0.03588,
+      "reference_relief_m": 18.282,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "seed": 2,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0366 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.924968,
+      "spread": 0.036618,
+      "reference_relief_m": 18.881,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "seed": 3,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0332 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.88097,
+      "spread": 0.033162,
+      "reference_relief_m": 15.672,
+      "triggered_checks": [
+        "spread"
+      ]
+    },
+    {
+      "scene": "vaihingen_area38",
+      "role": "known_good",
+      "seed": 4,
+      "N": 100,
+      "gate_passed": false,
+      "gate_reason": "normalized spread 0.0326 below provisional floor 0.05; points are bunched even if their hull is wide",
+      "count": 100,
+      "hull_coverage": 0.895837,
+      "spread": 0.032567,
+      "reference_relief_m": 18.163,
+      "triggered_checks": [
+        "spread"
+      ]
+    }
+  ],
+  "decision": {
+    "gate_source": "docs/final_sprint/phase2/HILLY_RESCUE_EXECUTION_COUNCIL.md#part-4",
+    "mount_adams_declined_count": 5,
+    "mount_adams_total": 5,
+    "control_false_refusal_count": 20,
+    "control_total": 20,
+    "baseline_control_false_refusals": 0,
+    "control_regression": 20,
+    "SUCCESS_THRESHOLD_MET": false,
+    "note": "This validates the EXISTING, unmodified preflight_checks() gate (count + hull_coverage + normalized_spread + reference_relief, shipped since commit 24a95b5 / #25 and 09413db / #32 respectively) against real N=100 uniform-random reference geometry, not new gating logic."
+  }
+}

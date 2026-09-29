@@ -1,0 +1,72 @@
+{
+  "_fixture_meta": {
+    "boundary": "CALIBRATION -> PIPELINE/VIEWER (handbook Part X), RELATIVE branch",
+    "version_status": "v0 / EXPERIMENTAL - IMPLEMENTED, not frozen",
+    "why_v0": "The branch now exists (issue #15): src/relative_dsm.py takes a plain JPG/PNG, runs inference, normalizes to a unitless [0,1] height field and writes .npy + sidecar, with calibration skipped entirely. It stays v0 rather than v1 because Part IV item (c) - qualitative evaluation on genuinely non-georeferenced photographs - has not been done: the repo has no licence-clean sample images, and 'does the shape look right' is subjective evidence that belongs with Debopriya rather than a self-assessed pass. Automated coverage is real (tests/test_relative_dsm.py, 9 cases) but it is not the same claim.",
+    "contract_document": "10_DOCUMENTATION/CALIBRATION_OUTPUT_INTERFACE.md",
+    "verified_against_code_on": "2026-08-29",
+    "verified_by": "Nirmalya (issue #5 / DW-S1-02)",
+    "owner": "Nirmalya (handbook Part IV; role_cards/NIRMALYA.md starter task 2)"
+  },
+  "schema_version": "calibration_output/v0-relative",
+  "product": "relative_dsm",
+  "status": "IMPLEMENTED (v0)",
+  "producer": {
+    "module": "src/relative_dsm.py",
+    "entry_point": "relative_dsm_from_image(image_path, depth_sign=1) -> RelativeDSM",
+    "writer": "save_relative_dsm(out_dir, scene, dsm) -> (.npy, sidecar .json)",
+    "does_not_import": "src/geoio.py - asserted structurally by tests/test_relative_dsm.py::test_relative_module_never_imports_geoio",
+    "owner": "Nirmalya"
+  },
+  "proposed_file": {
+    "path": "outputs/predictions/relative_dsm_{scene}.npy + relative_dsm_{scene}.json sidecar",
+    "rationale": "DepthWizard__Build_Guide.pdf section 10.1: a relative DSM is 'GeoTIFF if a spatial grid exists; otherwise NPY/PNG'. Here one does not exist.",
+    "status": "IMPLEMENTED"
+  },
+  "proposed_fields": {
+    "array": {
+      "shape": "(H, W)",
+      "dtype": "float32",
+      "units": "UNITLESS",
+      "meaning": "internally shape-consistent only: taller reads as taller. No metres, no datum."
+    },
+    "product": {
+      "value": "relative_dsm",
+      "purpose": "explicit discriminator; the metric fixture's counterpart"
+    },
+    "MUST_NOT_CARRY": [
+      "epsg",
+      "origin",
+      "pixel_size",
+      "nodata in metres",
+      "any field implying a real-world map location"
+    ]
+  },
+  "why_it_matters": "The official PS requires it: plain JPG/PNG input with no spatial reference must still produce a relative DSM. Handbook Part IV is explicit that this is a genuinely separate requirement and that 'we can already produce relative depth' is NOT evidence the branch is finished.",
+  "scope_decision": "Deferred, not forgotten. Issue #5 asks for the handoff to be wired and the two products kept distinct; it does not ask for the relative branch to be built, and the Day-1 rule caps this task at 'the smallest reliable handoff or contract'. Tracked as remaining Nirmalya lane work.",
+  "what_a_consumer_should_do_today": "You may build against it, but treat it as v0: the field set can still change. Never compare a relative product against metric ground truth, and never convert one to the other without a real reference. The sidecar's product/units fields are the discriminator - check them.",
+  "normalization": {
+    "method": "percentile_clip",
+    "default_window": "p2 to p98",
+    "output_range": [
+      0.0,
+      1.0
+    ],
+    "why_percentile": "min/max would let a single outlier pixel compress the whole scene into a sliver of the range and flatten the visible terrain. The bounds are recorded in the sidecar so the transform stays auditable and reversible.",
+    "degenerate_input": "flat or non-finite input yields a valid flat field rather than inf/nan"
+  },
+  "depth_sign": {
+    "default": 1,
+    "meaning": "+1 keeps the model's ordering; -1 inverts it",
+    "why_a_parameter": "For NADIR imagery +1 is correct: DA2's output is disparity-like, and looking straight down closer to the camera means higher elevation - a rooftop is both nearer and taller. Confirmed by this repo's own measurements (zeroshot_3A_raw.json mean_corr +0.731/+0.694/+0.802; zeroshot_3B fitted a=+3.898). NOTE: scripts/05_zeroshot.py previously carried a comment claiming the opposite; it was never what the code did and has been corrected under this issue. For oblique or handheld input - which 'plain JPG/PNG' permits - the nadir argument collapses and the sign genuinely inverts, which is why this is a parameter and not a constant."
+  },
+  "pseudo_gsd": {
+    "value": 1.0,
+    "meaning": "one mesh unit per pixel",
+    "why": "heightfield_to_mesh() requires a gsd and has no default. A non-georeferenced image has no real GSD; passing a plausible metric value would smuggle a units claim into the mesh."
+  },
+  "still_missing_for_v1": [
+    "(c) qualitative evaluation on genuinely non-georeferenced photographs (needs licence-clean images; Debopriya stewards the evidence)",
+    "downstream consumer review of the sidecar field set (Ashmita/Aishee)"
+  ]
+}
